@@ -28,7 +28,8 @@ export type GameId =
   | "DragPicture"
   | "SpinWheel"
   | "ReadingChallenge"
-  | "BlendExplorer";
+  | "BlendExplorer"
+  | "WordFamilyCards";
 
 export type AgeGroup = "nursery" | "lkg" | "ukg";
 

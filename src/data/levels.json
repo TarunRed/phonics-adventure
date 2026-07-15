@@ -58,5 +58,17 @@
     "ageGroup": ["ukg"],
     "icon": "📖",
     "colour": "#C9A0FF"
+  },
+  {
+    "id": 6,
+    "name": "Word Family Flash Cards",
+    "shortName": "Flash Cards",
+    "description": "See a picture and its word family, then pick the blend that completes it.",
+    "game": "WordFamilyCards",
+    "gameName": "Word Family Cards",
+    "gameTagline": "Pick the blend that completes the picture.",
+    "ageGroup": ["lkg", "ukg"],
+    "icon": "🎴",
+    "colour": "#FF9AC1"
   }
 ]

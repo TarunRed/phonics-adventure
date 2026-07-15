@@ -15,7 +15,7 @@ export interface SessionConfig {
   roundCount: number;
 }
 
-const ALL_GAMES: GameId[] = ["BlendExplorer", "SpinWheel", "BuildWord", "DragPicture", "ReadingChallenge"];
+const ALL_GAMES: GameId[] = ["BlendExplorer", "SpinWheel", "BuildWord", "DragPicture", "ReadingChallenge", "WordFamilyCards"];
 const DISTRACTOR_COUNT = 2;
 
 function poolFor(blend: string | null, family: string | null): PhonicsWord[] {
@@ -47,6 +47,20 @@ function buildRound(game: GameId, blend: string | null, family: string | null, u
       })
       .filter(Boolean);
     return { id: `${game}-${target.id}-${Math.random()}`, game, words: [target, ...otherWords] };
+  }
+
+  if (game === "WordFamilyCards") {
+    const focusPool = pool.filter((w) => !w.nonsense);
+    const target = focusPool.length > 0 ? pickRandom(focusPool, 1)[0] : pickRandom(allWords.filter((w) => !w.nonsense), 1)[0];
+    const otherBlends = allBlends.filter((b) => b.id !== target.blend);
+    const decoyBlendWords = shuffle(otherBlends)
+      .slice(0, 4)
+      .map((b) => {
+        const realWords = getWordsByBlend(b.id, { includeNonsense: false });
+        return pickRandom(realWords.length > 0 ? realWords : getWordsByBlend(b.id), 1)[0];
+      })
+      .filter(Boolean);
+    return { id: `${game}-${target.id}-${Math.random()}`, game, words: [target, ...decoyBlendWords] };
   }
 
   const requireEmoji = game === "DragPicture" || game === "ReadingChallenge" || game === "BlendExplorer";

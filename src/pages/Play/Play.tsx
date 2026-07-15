@@ -13,6 +13,7 @@ import { DragPicture } from "../../components/games/DragPicture/DragPicture";
 import { SpinWheel } from "../../components/games/SpinWheel/SpinWheel";
 import { ReadingChallenge } from "../../components/games/ReadingChallenge/ReadingChallenge";
 import { BlendExplorer } from "../../components/games/BlendExplorer/BlendExplorer";
+import { WordFamilyCards } from "../../components/games/WordFamilyCards/WordFamilyCards";
 import styles from "./Play.module.css";
 
 export interface PlayConfig {
@@ -30,6 +31,7 @@ const GAME_COMPONENTS: Record<GameId, typeof BuildWord> = {
   SpinWheel,
   ReadingChallenge,
   BlendExplorer,
+  WordFamilyCards,
 };
 
 const DEFAULT_CONFIG: PlayConfig = {
