@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import { ProgressProvider } from "./context/ProgressContext";
 import { initSpeech } from "./utils/speech";
 import { Home } from "./pages/Home/Home";
+import { BlendHub } from "./pages/BlendHub/BlendHub";
 import { Play } from "./pages/Play/Play";
 import { Teacher } from "./pages/Teacher/Teacher";
 import { Parent } from "./pages/Parent/Parent";
@@ -23,6 +24,7 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/blend/:blendId" element={<BlendHub />} />
           <Route path="/play" element={<Play />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/parent" element={<Parent />} />

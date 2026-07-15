@@ -7,6 +7,7 @@ import type { GameId } from "../../types";
 import { Header } from "../../components/shared/Header";
 import { ProgressDots } from "../../components/shared/ProgressDots";
 import { Celebration } from "../../components/shared/Celebration";
+import { RecordButton } from "../../components/shared/RecordButton";
 import { BuildWord } from "../../components/games/BuildWord/BuildWord";
 import { DragPicture } from "../../components/games/DragPicture/DragPicture";
 import { SpinWheel } from "../../components/games/SpinWheel/SpinWheel";
@@ -126,6 +127,10 @@ export function Play() {
           onResult={handleResult}
           hintsEnabled={config.hintsEnabled}
         />
+      </div>
+
+      <div className={styles.recordArea}>
+        <RecordButton key={round.id} prompt={round.words[0].word} />
       </div>
 
       {celebrating && <Celebration onDone={handleCelebrationDone} />}

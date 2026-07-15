@@ -32,6 +32,13 @@
   color: var(--color-ink-soft);
 }
 
+.blendCaption {
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
 .blendGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

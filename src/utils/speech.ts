@@ -52,31 +52,39 @@ export function speak(text: string, options: SpeakOptions = {}): void {
     return;
   }
 
-  window.speechSynthesis.cancel();
+  const synth = window.speechSynthesis;
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = options.rate ?? 0.85;
-  utterance.pitch = options.pitch ?? 1.15;
-  const voice = pickVoice();
-  if (voice) utterance.voice = voice;
-  if (options.onEnd) utterance.onend = () => options.onEnd?.();
+  const doSpeak = () => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = options.rate ?? 0.85;
+    utterance.pitch = options.pitch ?? 1.15;
+    const voice = pickVoice();
+    if (voice) utterance.voice = voice;
+    if (options.onEnd) utterance.onend = () => options.onEnd?.();
+    synth.speak(utterance);
+  };
 
-  window.speechSynthesis.speak(utterance);
+  // Chrome silently drops speak() if it's called in the same tick as
+  // cancel() — a long-standing Web Speech bug. A short delay avoids it.
+  if (synth.speaking || synth.pending) {
+    synth.cancel();
+    setTimeout(doSpeak, 50);
+  } else {
+    doSpeak();
+  }
 }
 
 /** Speaks a sequence of sound parts one after another (e.g. ["s", "n", "ap", "snap"]). */
 export function speakSequence(parts: string[], options: Omit<SpeakOptions, "onEnd"> = {}): void {
   if (!isSpeechSupported() || parts.length === 0) return;
-  window.speechSynthesis.cancel();
 
-  const [first, ...rest] = parts;
   const speakNext = (queue: string[]) => {
     if (queue.length === 0) return;
     const [current, ...remaining] = queue;
     speak(current, { ...options, onEnd: () => speakNext(remaining) });
   };
 
-  speakNext([first, ...rest]);
+  speakNext(parts);
 }
 
 export function stopSpeech(): void {

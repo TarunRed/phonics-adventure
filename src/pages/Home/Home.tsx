@@ -20,15 +20,7 @@ export function Home() {
   };
 
   const startBlend = (blendId: string) => {
-    const config: Partial<PlayConfig> = {
-      blend: blendId,
-      family: null,
-      onlyGame: null,
-      roundCount: 10,
-      hintsEnabled: true,
-      hideTimer: false,
-    };
-    navigate("/play", { state: config });
+    navigate(`/blend/${blendId}`);
   };
 
   return (
@@ -43,6 +35,7 @@ export function Home() {
         Play
       </Button>
 
+      <p className={styles.blendCaption}>Or pick a blend to choose a game:</p>
       <div className={styles.blendGrid}>
         {allBlends.map((blend) => (
           <button

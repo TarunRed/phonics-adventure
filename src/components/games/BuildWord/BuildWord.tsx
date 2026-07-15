@@ -60,7 +60,6 @@ export function BuildWord({ words, onResult, hintsEnabled }: GameProps) {
     setTiles(shuffle(letterTiles));
     setIncorrectCount(0);
     setStatus("playing");
-    speak(`Build the word. ${target.blend.toLowerCase()}, ${target.family}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target.id]);
 

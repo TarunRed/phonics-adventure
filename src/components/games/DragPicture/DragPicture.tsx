@@ -22,8 +22,7 @@ export function DragPicture({ words, onResult, hintsEnabled }: GameProps) {
     setIncorrectCount(0);
     setSelected(null);
     setStatus("playing");
-    speak(target.word);
-  }, [target.id, target.word]);
+  }, [target.id]);
 
   const handlePick = (wordId: string) => {
     if (status !== "playing") return;

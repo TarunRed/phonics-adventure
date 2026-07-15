@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import type { GameProps, PhonicsWord } from "../../../types";
 import { pickRandom, shuffle } from "../../../utils/phonicsData";
 import { speak } from "../../../utils/speech";
 import { useErrorEscalation } from "../../../hooks/useErrorEscalation";
 import { EmojiTile } from "../../shared/EmojiTile";
+import { AudioButton } from "../../shared/AudioButton";
+import { Button } from "../../shared/Button";
 import { HintBubble } from "../../shared/HintBubble";
 import styles from "./SpinWheel.module.css";
 
@@ -20,31 +22,28 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
 
   const target = words[0];
   const [rotation, setRotation] = useState(0);
-  const [spinning, setSpinning] = useState(true);
   const [landedIndex, setLandedIndex] = useState<number | null>(null);
   const [options, setOptions] = useState<PhonicsWord[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [incorrectCount, setIncorrectCount] = useState(0);
-  const [status, setStatus] = useState<"spinning" | "playing" | "done">("spinning");
-  const wheelRef = useRef<HTMLDivElement>(null);
+  const [status, setStatus] = useState<"idle" | "spinning" | "playing" | "done">("idle");
 
   const landedWord = landedIndex !== null ? segments[landedIndex] : null;
   const escalation = useErrorEscalation(incorrectCount, landedWord ?? target);
 
-  useEffect(() => {
+  const handleSpin = () => {
+    if (status !== "idle") return;
     const targetIndex = Math.max(0, segments.findIndex((s) => s.blend === target.blend));
     const segmentAngle = 360 / segments.length;
     const finalAngle = 360 * 5 + (360 - (targetIndex * segmentAngle + segmentAngle / 2));
-    const timer = setTimeout(() => setRotation(finalAngle), 100);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setRotation(finalAngle);
+    setStatus("spinning");
+  };
 
   const handleTransitionEnd = () => {
     if (status !== "spinning") return;
     const targetIndex = Math.max(0, segments.findIndex((s) => s.blend === target.blend));
     setLandedIndex(targetIndex);
-    setSpinning(false);
     setStatus("playing");
     const landed = segments[targetIndex];
     speak(`${landed.blend}. Find a word that starts with ${landed.blend}.`);
@@ -77,7 +76,6 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
       <div className={styles.wheelWrap}>
         <div className={styles.pointer}>▼</div>
         <div
-          ref={wheelRef}
           className={styles.wheel}
           style={{
             transform: `rotate(${rotation}deg)`,
@@ -99,11 +97,23 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
         </div>
       </div>
 
-      {spinning && <p className={styles.spinningText}>Spinning...</p>}
+      {status === "idle" && (
+        <Button variant="secondary" onClick={handleSpin}>
+          Spin the Wheel!
+        </Button>
+      )}
+      {status === "spinning" && <p className={styles.spinningText}>Spinning...</p>}
 
-      {!spinning && landedWord && (
+      {status !== "idle" && status !== "spinning" && landedWord && (
         <div className={styles.challenge}>
-          <h3>Find a word that starts with "{landedWord.blend}"</h3>
+          <div className={styles.challengeHeading}>
+            <h3>Find a word that starts with "{landedWord.blend}"</h3>
+            <AudioButton
+              text={`${landedWord.blend}. Find a word that starts with ${landedWord.blend}.`}
+              size="sm"
+              label="Hear the challenge again"
+            />
+          </div>
           <div className={styles.options}>
             {options.map((word) => (
               <EmojiTile

@@ -21,17 +21,15 @@ export function BlendExplorer({ words, onResult }: GameProps) {
     setStage("letters");
     setSelected(null);
     setIncorrectCount(0);
-    speakSequence([stretchSound(letter1), stretchSound(letter2)]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target.id]);
 
   const advance = () => {
     if (stage === "letters") {
+      speakSequence([stretchSound(letter1), stretchSound(letter2), target.blend.toLowerCase()]);
       setStage("blend");
-      speak(target.blend.toLowerCase());
     } else if (stage === "blend") {
-      setStage("word");
       speak(target.word);
+      setStage("word");
     } else if (stage === "word") {
       setStage("check");
     }
@@ -56,8 +54,12 @@ export function BlendExplorer({ words, onResult }: GameProps) {
       <div className={styles.stage}>
         {stage === "letters" && (
           <div className={styles.row}>
-            <span className={styles.tile}>{letter1.toUpperCase()}</span>
-            <span className={styles.tile}>{letter2.toUpperCase()}</span>
+            <button type="button" className={styles.tile} onClick={() => speak(stretchSound(letter1))}>
+              {letter1.toUpperCase()}
+            </button>
+            <button type="button" className={styles.tile} onClick={() => speak(stretchSound(letter2))}>
+              {letter2.toUpperCase()}
+            </button>
           </div>
         )}
         {stage === "blend" && (

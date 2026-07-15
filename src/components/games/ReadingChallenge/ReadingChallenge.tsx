@@ -27,8 +27,6 @@ export function ReadingChallenge({ words, onResult, hintsEnabled }: GameProps) {
     setIncorrectCount(0);
     setSelected(null);
     setStatus("playing");
-    if (!silentMode) speak(target.word);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target.id]);
 
   const handlePick = (wordId: string) => {
