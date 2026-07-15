@@ -8,6 +8,7 @@ import { Header } from "../../components/shared/Header";
 import { ProgressDots } from "../../components/shared/ProgressDots";
 import { Celebration } from "../../components/shared/Celebration";
 import { RecordButton } from "../../components/shared/RecordButton";
+import { HowToPlayModal } from "../../components/shared/HowToPlayModal";
 import { BuildWord } from "../../components/games/BuildWord/BuildWord";
 import { DragPicture } from "../../components/games/DragPicture/DragPicture";
 import { SpinWheel } from "../../components/games/SpinWheel/SpinWheel";
@@ -61,8 +62,10 @@ export function Play() {
   const [roundIndex, setRoundIndex] = useState(0);
   const [elapsedMs, setElapsedMs] = useState(0);
   const [celebrating, setCelebrating] = useState(false);
+  const [showHelp, setShowHelp] = useState(true);
   const prevStars = useRef(0);
   const startedAt = useRef(Date.now());
+  const seenGames = useRef<Set<GameId>>(new Set([rounds[0].game]));
 
   useEffect(() => {
     resetSession();
@@ -81,6 +84,13 @@ export function Play() {
   const blend = useMemo(() => getBlend(round.words[0].blend), [round]);
   const level = useMemo(() => getLevelByGame(round.game), [round.game]);
   const GameComponent = GAME_COMPONENTS[round.game];
+
+  useEffect(() => {
+    if (!seenGames.current.has(round.game)) {
+      seenGames.current.add(round.game);
+      setShowHelp(true);
+    }
+  }, [round.game]);
 
   const handleResult = (correct: boolean, word: (typeof round.words)[number], tries: number) => {
     recordAttempt(word, round.game, correct, tries);
@@ -115,7 +125,14 @@ export function Play() {
 
   return (
     <div className={styles.page}>
-      <Header title={`${level.icon} ${level.gameName}`} />
+      <Header
+        title={`${level.icon} ${level.gameName}`}
+        rightExtra={
+          <button type="button" className={styles.helpButton} onClick={() => setShowHelp(true)} aria-label="How to play">
+            ❓
+          </button>
+        }
+      />
 
       <div className={styles.meta}>
         <ProgressDots total={rounds.length} current={roundIndex} />
@@ -142,6 +159,7 @@ export function Play() {
       </div>
 
       {celebrating && <Celebration onDone={handleCelebrationDone} />}
+      {showHelp && <HowToPlayModal game={round.game} onClose={() => setShowHelp(false)} />}
     </div>
   );
 }
