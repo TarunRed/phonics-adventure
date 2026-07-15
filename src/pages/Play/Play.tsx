@@ -138,7 +138,7 @@ export function Play() {
       </div>
 
       <div className={styles.recordArea}>
-        <RecordButton key={round.id} prompt={round.words[0].word} />
+        <RecordButton key={round.id} targetWord={round.words[0].word} />
       </div>
 
       {celebrating && <Celebration onDone={handleCelebrationDone} />}

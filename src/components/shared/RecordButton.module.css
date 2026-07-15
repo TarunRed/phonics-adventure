@@ -3,12 +3,8 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-}
-
-.prompt {
-  font-size: 0.85rem;
-  color: var(--color-ink-soft);
-  font-weight: 600;
+  min-height: 90px;
+  justify-content: center;
 }
 
 .recordButton {
@@ -43,47 +39,47 @@
   font-weight: 700;
 }
 
-.playbackRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.playButton,
-.againButton {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: var(--color-mint);
-  color: white;
-  font-size: 1.2rem;
-  box-shadow: var(--shadow-soft);
-  touch-action: manipulation;
-}
-
-.againButton {
-  background: var(--color-surface);
-  color: var(--color-ink);
-}
-
-.playButton:active,
-.againButton:active {
-  transform: scale(0.92);
-}
-
-.errorBox {
+.result {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  max-width: 220px;
+  max-width: 240px;
   text-align: center;
+  animation: rise 0.25s ease;
 }
 
-.errorBox p {
+.correctIcon,
+.incorrectIcon {
+  font-size: 1.8rem;
+}
+
+.correctText {
   font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.incorrectText {
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--color-ink-soft);
+}
+
+.againButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-soft);
+  touch-action: manipulation;
+}
+
+.againButton:active {
+  transform: scale(0.92);
 }
 
 .retryButton {
@@ -104,5 +100,16 @@
   50% {
     transform: scale(1.08);
     box-shadow: 0 0 0 10px rgba(240, 107, 160, 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

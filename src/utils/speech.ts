@@ -11,6 +11,12 @@
 let cachedVoice: SpeechSynthesisVoice | null = null;
 let voicesLoaded = false;
 
+// Chrome has a long-standing bug where a SpeechSynthesisUtterance with no
+// other JS reference can be garbage-collected before it finishes speaking,
+// which silently cancels the audio. Keeping one alive here (plus a small
+// queue so overlapping calls don't stomp on each other) works around it.
+let currentUtterance: SpeechSynthesisUtterance | null = null;
+
 function pickVoice(): SpeechSynthesisVoice | null {
   if (!isSpeechSupported()) return null;
   if (voicesLoaded && cachedVoice) return cachedVoice;
@@ -55,12 +61,25 @@ export function speak(text: string, options: SpeakOptions = {}): void {
   const synth = window.speechSynthesis;
 
   const doSpeak = () => {
+    // Some browsers get stuck "paused" after tab-visibility changes, which
+    // silently swallows every future speak() call until resumed.
+    synth.resume();
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = options.rate ?? 0.85;
     utterance.pitch = options.pitch ?? 1.15;
     const voice = pickVoice();
     if (voice) utterance.voice = voice;
-    if (options.onEnd) utterance.onend = () => options.onEnd?.();
+    utterance.onend = () => {
+      if (currentUtterance === utterance) currentUtterance = null;
+      options.onEnd?.();
+    };
+    utterance.onerror = () => {
+      if (currentUtterance === utterance) currentUtterance = null;
+      options.onEnd?.();
+    };
+
+    currentUtterance = utterance; // hold a reference so Chrome can't GC it mid-speech
     synth.speak(utterance);
   };
 
@@ -89,6 +108,7 @@ export function speakSequence(parts: string[], options: Omit<SpeakOptions, "onEn
 
 export function stopSpeech(): void {
   if (isSpeechSupported()) window.speechSynthesis.cancel();
+  currentUtterance = null;
 }
 
 /** Stretches a letter sound for blending demos, e.g. "s" -> "sssss". */

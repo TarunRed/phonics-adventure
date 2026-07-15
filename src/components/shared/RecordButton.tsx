@@ -1,61 +1,83 @@
-import { useRef } from "react";
-import { useRecorder } from "../../hooks/useRecorder";
+import { useEffect } from "react";
+import { useSpeechRecognizer } from "../../hooks/useSpeechRecognizer";
 import styles from "./RecordButton.module.css";
 
 interface RecordButtonProps {
-  /** What the child is being asked to say, shown as a small caption. */
-  prompt?: string;
+  /** The word being checked. Never shown as text — only used to grade what was heard. */
+  targetWord: string;
 }
 
-/** Lets a child record their own voice and immediately hear it played back. */
-export function RecordButton({ prompt }: RecordButtonProps) {
-  const { state, audioUrl, errorMessage, start, stop, reset } = useRecorder();
-  const audioRef = useRef<HTMLAudioElement>(null);
+/**
+ * Lets a child say the target word out loud and tells them whether it was
+ * heard correctly — a pronunciation check, not just record-and-playback.
+ * Deliberately shows no text spelling out the word, so it doesn't give
+ * away answers in games where the word is still meant to be a secret.
+ */
+export function RecordButton({ targetWord }: RecordButtonProps) {
+  const { state, listen, reset } = useSpeechRecognizer();
 
-  const playback = () => {
-    audioRef.current?.play();
-  };
+  // Reset whenever the round changes (targetWord differs) so stale
+  // correct/incorrect feedback doesn't linger into the next question.
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetWord]);
+
+  if (state === "unsupported") return null;
 
   return (
     <div className={styles.wrap}>
-      {prompt && state === "idle" && <p className={styles.prompt}>Say "{prompt}"</p>}
-
       {state === "idle" && (
-        <button type="button" className={styles.recordButton} onClick={start} aria-label="Record your voice">
-          🎤
-        </button>
-      )}
-
-      {state === "requesting" && (
-        <button type="button" className={styles.recordButton} disabled aria-label="Requesting microphone">
-          🎤
-        </button>
-      )}
-
-      {state === "recording" && (
-        <button type="button" className={[styles.recordButton, styles.recording].join(" ")} onClick={stop} aria-label="Stop recording">
-          ⏹
-        </button>
-      )}
-
-      {state === "recording" && <p className={styles.hint}>Recording… tap to stop</p>}
-
-      {state === "recorded" && audioUrl && (
-        <div className={styles.playbackRow}>
-          <button type="button" className={styles.playButton} onClick={playback} aria-label="Play your recording">
-            ▶️
+        <>
+          <button type="button" className={styles.recordButton} onClick={() => listen(targetWord)} aria-label={`Say "${targetWord}" to check yourself`}>
+            🎤
           </button>
-          <button type="button" className={styles.againButton} onClick={reset} aria-label="Record again">
+          <p className={styles.hint}>Try saying it!</p>
+        </>
+      )}
+
+      {state === "listening" && (
+        <>
+          <button type="button" className={[styles.recordButton, styles.recording].join(" ")} disabled aria-label="Listening">
+            🎤
+          </button>
+          <p className={styles.hint}>Listening…</p>
+        </>
+      )}
+
+      {state === "checking" && (
+        <>
+          <button type="button" className={styles.recordButton} disabled aria-label="Checking">
+            🎤
+          </button>
+          <p className={styles.hint}>Checking…</p>
+        </>
+      )}
+
+      {state === "correct" && (
+        <div className={styles.result}>
+          <span className={styles.correctIcon}>✅</span>
+          <p className={styles.correctText}>Nice pronunciation!</p>
+          <button type="button" className={styles.againButton} onClick={() => listen(targetWord)} aria-label="Try again">
             🔁
           </button>
-          <audio ref={audioRef} src={audioUrl} />
+        </div>
+      )}
+
+      {state === "incorrect" && (
+        <div className={styles.result}>
+          <span className={styles.incorrectIcon}>🔁</span>
+          <p className={styles.incorrectText}>Give it another try.</p>
+          <button type="button" className={styles.againButton} onClick={() => listen(targetWord)} aria-label="Try again">
+            🎤
+          </button>
         </div>
       )}
 
       {state === "error" && (
-        <div className={styles.errorBox}>
-          <p>{errorMessage}</p>
-          <button type="button" className={styles.retryButton} onClick={reset}>
+        <div className={styles.result}>
+          <p className={styles.incorrectText}>Didn't catch that.</p>
+          <button type="button" className={styles.retryButton} onClick={() => listen(targetWord)}>
             Try Again
           </button>
         </div>
