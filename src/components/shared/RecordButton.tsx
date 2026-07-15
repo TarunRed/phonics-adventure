@@ -8,13 +8,14 @@ interface RecordButtonProps {
 }
 
 /**
- * Lets a child say the target word out loud and tells them whether it was
- * heard correctly — a pronunciation check, not just record-and-playback.
- * Deliberately shows no text spelling out the word, so it doesn't give
- * away answers in games where the word is still meant to be a secret.
+ * Lets a child start recording themselves saying the target word, stop
+ * whenever they're done, and see whether it was heard correctly — a
+ * pronunciation check, not just record-and-playback. Deliberately shows
+ * no text spelling out the word, so it doesn't give away answers in games
+ * where the word is still meant to be a secret.
  */
 export function RecordButton({ targetWord }: RecordButtonProps) {
-  const { state, listen, reset } = useSpeechRecognizer();
+  const { state, listen, stop, reset } = useSpeechRecognizer();
 
   // Reset whenever the round changes (targetWord differs) so stale
   // correct/incorrect feedback doesn't linger into the next question.
@@ -29,19 +30,19 @@ export function RecordButton({ targetWord }: RecordButtonProps) {
     <div className={styles.wrap}>
       {state === "idle" && (
         <>
-          <button type="button" className={styles.recordButton} onClick={() => listen(targetWord)} aria-label={`Say "${targetWord}" to check yourself`}>
+          <button type="button" className={styles.recordButton} onClick={() => listen(targetWord)} aria-label={`Start recording: say "${targetWord}" to check yourself`}>
             🎤
           </button>
-          <p className={styles.hint}>Try saying it!</p>
+          <p className={styles.hint}>Tap to start recording</p>
         </>
       )}
 
       {state === "listening" && (
         <>
-          <button type="button" className={[styles.recordButton, styles.recording].join(" ")} disabled aria-label="Listening">
-            🎤
+          <button type="button" className={[styles.recordButton, styles.recording].join(" ")} onClick={stop} aria-label="Stop recording">
+            ⏹
           </button>
-          <p className={styles.hint}>Listening…</p>
+          <p className={styles.hint}>Recording… tap to stop</p>
         </>
       )}
 
@@ -58,8 +59,8 @@ export function RecordButton({ targetWord }: RecordButtonProps) {
         <div className={styles.result}>
           <span className={styles.correctIcon}>✅</span>
           <p className={styles.correctText}>Nice pronunciation!</p>
-          <button type="button" className={styles.againButton} onClick={() => listen(targetWord)} aria-label="Try again">
-            🔁
+          <button type="button" className={styles.againButton} onClick={() => listen(targetWord)} aria-label="Record again">
+            🎤
           </button>
         </div>
       )}
@@ -68,7 +69,7 @@ export function RecordButton({ targetWord }: RecordButtonProps) {
         <div className={styles.result}>
           <span className={styles.incorrectIcon}>🔁</span>
           <p className={styles.incorrectText}>Give it another try.</p>
-          <button type="button" className={styles.againButton} onClick={() => listen(targetWord)} aria-label="Try again">
+          <button type="button" className={styles.againButton} onClick={() => listen(targetWord)} aria-label="Record again">
             🎤
           </button>
         </div>
@@ -78,7 +79,7 @@ export function RecordButton({ targetWord }: RecordButtonProps) {
         <div className={styles.result}>
           <p className={styles.incorrectText}>Didn't catch that.</p>
           <button type="button" className={styles.retryButton} onClick={() => listen(targetWord)}>
-            Try Again
+            Start Recording
           </button>
         </div>
       )}

@@ -27,7 +27,7 @@ interface PronunciationCheckProps {
  * feels earned rather than auto-skipped past.
  */
 export function PronunciationCheck({ target, instruction, onContinue, continueLabel = "Continue" }: PronunciationCheckProps) {
-  const { state, listen, reset } = useSpeechRecognizer();
+  const { state, listen, stop, reset } = useSpeechRecognizer();
   const [attemptCount, setAttemptCount] = useState(0);
   const onContinueRef = useRef(onContinue);
   onContinueRef.current = onContinue;
@@ -74,17 +74,17 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
       <p className={styles.targetText}>{target.toLowerCase()}</p>
 
       {!gaveUp && state === "idle" && (
-        <button type="button" className={styles.micButton} onClick={() => listen(target)} aria-label={`Say "${target}"`}>
+        <button type="button" className={styles.micButton} onClick={() => listen(target)} aria-label={`Start recording: say "${target}"`}>
           🎤
         </button>
       )}
 
       {!gaveUp && state === "listening" && (
-        <button type="button" className={[styles.micButton, styles.recording].join(" ")} disabled aria-label="Listening">
-          🎤
+        <button type="button" className={[styles.micButton, styles.recording].join(" ")} onClick={stop} aria-label="Stop recording">
+          ⏹
         </button>
       )}
-      {!gaveUp && state === "listening" && <p className={styles.hint}>Listening…</p>}
+      {!gaveUp && state === "listening" && <p className={styles.hint}>Recording… tap to stop</p>}
       {!gaveUp && state === "checking" && <p className={styles.hint}>Checking…</p>}
 
       {state === "correct" && <p className={styles.correctText}>✅ Nice pronunciation!</p>}

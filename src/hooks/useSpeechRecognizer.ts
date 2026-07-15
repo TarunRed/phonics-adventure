@@ -95,6 +95,16 @@ export function useSpeechRecognizer() {
     [clearWatchdog]
   );
 
+  /**
+   * Manually ends the recording early. Unlike abort(), stop() still lets
+   * the browser finalize and grade whatever was captured up to this point
+   * — it doesn't just throw the recording away.
+   */
+  const stop = useCallback(() => {
+    clearWatchdog();
+    if (recognitionRef.current) recognitionRef.current.stop();
+  }, [clearWatchdog]);
+
   const reset = useCallback(() => {
     clearWatchdog();
     recognitionRef.current?.abort();
@@ -102,5 +112,5 @@ export function useSpeechRecognizer() {
     setHeardText(null);
   }, [clearWatchdog]);
 
-  return { state, heardText, listen, reset };
+  return { state, heardText, listen, stop, reset };
 }
