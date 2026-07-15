@@ -1,0 +1,82 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.button:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: var(--shadow-pressed);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-sky-dark);
+  outline-offset: 3px;
+}
+
+.icon {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+/* Sizes */
+.lg {
+  min-height: 72px;
+  padding: 18px 36px;
+  font-size: 1.5rem;
+  border-radius: var(--radius-lg);
+}
+
+.md {
+  min-height: 56px;
+  padding: 14px 28px;
+  font-size: 1.15rem;
+}
+
+.sm {
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+/* Variants */
+.primary {
+  background: linear-gradient(180deg, var(--color-coral) 0%, var(--color-coral-dark) 100%);
+}
+
+.secondary {
+  background: linear-gradient(180deg, var(--color-sky) 0%, var(--color-sky-dark) 100%);
+}
+
+.success {
+  background: linear-gradient(180deg, var(--color-mint) 0%, var(--color-mint-dark) 100%);
+}
+
+.ghost {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: 0 4px 12px rgba(122, 116, 136, 0.1);
+  border: 2px solid var(--color-bg-alt);
+}
+
+@media (hover: hover) {
+  .button:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+}

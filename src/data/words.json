@@ -1,0 +1,812 @@
+[
+  {
+    "id": "w001",
+    "word": "sca",
+    "blend": "SC",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sca.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w025",
+    "word": "scab",
+    "blend": "SC",
+    "family": "ab",
+    "emoji": "🩹",
+    "nonsense": false,
+    "audio": "scab.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w002",
+    "word": "scad",
+    "blend": "SC",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "scad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w003",
+    "word": "scag",
+    "blend": "SC",
+    "family": "ag",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "scag.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w004",
+    "word": "scam",
+    "blend": "SC",
+    "family": "am",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "scam.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w005",
+    "word": "scan",
+    "blend": "SC",
+    "family": "an",
+    "emoji": "🔍",
+    "nonsense": false,
+    "audio": "scan.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w006",
+    "word": "scap",
+    "blend": "SC",
+    "family": "ap",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "scap.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w028",
+    "word": "ska",
+    "blend": "SK",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "ska.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w029",
+    "word": "skad",
+    "blend": "SK",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "skad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w030",
+    "word": "skag",
+    "blend": "SK",
+    "family": "ag",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "skag.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w031",
+    "word": "skam",
+    "blend": "SK",
+    "family": "am",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "skam.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w032",
+    "word": "skan",
+    "blend": "SK",
+    "family": "an",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "skan.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w039",
+    "word": "skid",
+    "blend": "SK",
+    "family": "id",
+    "emoji": "🛞",
+    "nonsense": false,
+    "audio": "skid.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w054",
+    "word": "skim",
+    "blend": "SK",
+    "family": "im",
+    "emoji": "🥛",
+    "nonsense": false,
+    "audio": "skim.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w041",
+    "word": "skin",
+    "blend": "SK",
+    "family": "in",
+    "emoji": "🧴",
+    "nonsense": false,
+    "audio": "skin.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w042",
+    "word": "skip",
+    "blend": "SK",
+    "family": "ip",
+    "emoji": "🦘",
+    "nonsense": false,
+    "audio": "skip.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w043",
+    "word": "skit",
+    "blend": "SK",
+    "family": "it",
+    "emoji": "🎭",
+    "nonsense": false,
+    "audio": "skit.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w055",
+    "word": "sla",
+    "blend": "SL",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sla.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w078",
+    "word": "slab",
+    "blend": "SL",
+    "family": "ab",
+    "emoji": "🪨",
+    "nonsense": false,
+    "audio": "slab.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w056",
+    "word": "slad",
+    "blend": "SL",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "slad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w057",
+    "word": "slag",
+    "blend": "SL",
+    "family": "ag",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "slag.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w058",
+    "word": "slam",
+    "blend": "SL",
+    "family": "am",
+    "emoji": "🚪",
+    "nonsense": false,
+    "audio": "slam.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w059",
+    "word": "slan",
+    "blend": "SL",
+    "family": "an",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "slan.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w060",
+    "word": "slap",
+    "blend": "SL",
+    "family": "ap",
+    "emoji": "🖐️",
+    "nonsense": false,
+    "audio": "slap.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w061",
+    "word": "slat",
+    "blend": "SL",
+    "family": "at",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "slat.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w062",
+    "word": "sled",
+    "blend": "SL",
+    "family": "ed",
+    "emoji": "🛷",
+    "nonsense": false,
+    "audio": "sled.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w066",
+    "word": "slid",
+    "blend": "SL",
+    "family": "id",
+    "emoji": "🧊",
+    "nonsense": false,
+    "audio": "slid.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w080",
+    "word": "slim",
+    "blend": "SL",
+    "family": "im",
+    "emoji": "📏",
+    "nonsense": false,
+    "audio": "slim.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w069",
+    "word": "slip",
+    "blend": "SL",
+    "family": "ip",
+    "emoji": "🧼",
+    "nonsense": false,
+    "audio": "slip.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w070",
+    "word": "slit",
+    "blend": "SL",
+    "family": "it",
+    "emoji": "✂️",
+    "nonsense": false,
+    "audio": "slit.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w072",
+    "word": "slog",
+    "blend": "SL",
+    "family": "og",
+    "emoji": "🥾",
+    "nonsense": false,
+    "audio": "slog.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w073",
+    "word": "slop",
+    "blend": "SL",
+    "family": "op",
+    "emoji": "🥣",
+    "nonsense": false,
+    "audio": "slop.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w074",
+    "word": "slot",
+    "blend": "SL",
+    "family": "ot",
+    "emoji": "🎰",
+    "nonsense": false,
+    "audio": "slot.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w076",
+    "word": "slug",
+    "blend": "SL",
+    "family": "ug",
+    "emoji": "🐌",
+    "nonsense": false,
+    "audio": "slug.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w081",
+    "word": "sma",
+    "blend": "SM",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sma.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w082",
+    "word": "smad",
+    "blend": "SM",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "smad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w083",
+    "word": "smag",
+    "blend": "SM",
+    "family": "ag",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "smag.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w084",
+    "word": "smam",
+    "blend": "SM",
+    "family": "am",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "smam.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w085",
+    "word": "sman",
+    "blend": "SM",
+    "family": "an",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sman.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w098",
+    "word": "smog",
+    "blend": "SM",
+    "family": "og",
+    "emoji": "🌫️",
+    "nonsense": false,
+    "audio": "smog.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w107",
+    "word": "sna",
+    "blend": "SN",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sna.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w108",
+    "word": "snad",
+    "blend": "SN",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "snad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w109",
+    "word": "snag",
+    "blend": "SN",
+    "family": "ag",
+    "emoji": "🪢",
+    "nonsense": false,
+    "audio": "snag.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w110",
+    "word": "snam",
+    "blend": "SN",
+    "family": "am",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "snam.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w111",
+    "word": "snan",
+    "blend": "SN",
+    "family": "an",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "snan.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w112",
+    "word": "snap",
+    "blend": "SN",
+    "family": "ap",
+    "emoji": "🫰",
+    "nonsense": false,
+    "audio": "snap.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w113",
+    "word": "snat",
+    "blend": "SN",
+    "family": "at",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "snat.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w121",
+    "word": "snip",
+    "blend": "SN",
+    "family": "ip",
+    "emoji": "✂️",
+    "nonsense": false,
+    "audio": "snip.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w127",
+    "word": "snug",
+    "blend": "SN",
+    "family": "ug",
+    "emoji": "🛏️",
+    "nonsense": false,
+    "audio": "snug.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w133",
+    "word": "spa",
+    "blend": "SP",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "spa.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w134",
+    "word": "spad",
+    "blend": "SP",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "spad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w135",
+    "word": "spag",
+    "blend": "SP",
+    "family": "ag",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "spag.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w136",
+    "word": "spam",
+    "blend": "SP",
+    "family": "am",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "spam.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w137",
+    "word": "span",
+    "blend": "SP",
+    "family": "an",
+    "emoji": "🌉",
+    "nonsense": false,
+    "audio": "span.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w138",
+    "word": "spap",
+    "blend": "SP",
+    "family": "ap",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "spap.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w145",
+    "word": "spin",
+    "blend": "SP",
+    "family": "in",
+    "emoji": "🌀",
+    "nonsense": false,
+    "audio": "spin.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w147",
+    "word": "spit",
+    "blend": "SP",
+    "family": "it",
+    "emoji": "💦",
+    "nonsense": false,
+    "audio": "spit.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w151",
+    "word": "spot",
+    "blend": "SP",
+    "family": "ot",
+    "emoji": "🐾",
+    "nonsense": false,
+    "audio": "spot.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w154",
+    "word": "spun",
+    "blend": "SP",
+    "family": "un",
+    "emoji": "🎡",
+    "nonsense": false,
+    "audio": "spun.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w159",
+    "word": "sta",
+    "blend": "ST",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sta.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w160",
+    "word": "stad",
+    "blend": "ST",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "stad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w161",
+    "word": "stag",
+    "blend": "ST",
+    "family": "ag",
+    "emoji": "🦌",
+    "nonsense": false,
+    "audio": "stag.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w162",
+    "word": "stam",
+    "blend": "ST",
+    "family": "am",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "stam.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w163",
+    "word": "stan",
+    "blend": "ST",
+    "family": "an",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "stan.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w164",
+    "word": "stap",
+    "blend": "ST",
+    "family": "ap",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "stap.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w183",
+    "word": "stem",
+    "blend": "ST",
+    "family": "em",
+    "emoji": "🌱",
+    "nonsense": false,
+    "audio": "stem.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w177",
+    "word": "stop",
+    "blend": "ST",
+    "family": "op",
+    "emoji": "🛑",
+    "nonsense": false,
+    "audio": "stop.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w179",
+    "word": "stub",
+    "blend": "ST",
+    "family": "ub",
+    "emoji": "🎫",
+    "nonsense": false,
+    "audio": "stub.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w181",
+    "word": "stun",
+    "blend": "ST",
+    "family": "un",
+    "emoji": "😲",
+    "nonsense": false,
+    "audio": "stun.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w185",
+    "word": "swa",
+    "blend": "SW",
+    "family": "a",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "swa.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w209",
+    "word": "swab",
+    "blend": "SW",
+    "family": "ab",
+    "emoji": "🧽",
+    "nonsense": false,
+    "audio": "swab.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w186",
+    "word": "swad",
+    "blend": "SW",
+    "family": "ad",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "swad.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w187",
+    "word": "swag",
+    "blend": "SW",
+    "family": "ag",
+    "emoji": "🎁",
+    "nonsense": false,
+    "audio": "swag.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w188",
+    "word": "swam",
+    "blend": "SW",
+    "family": "am",
+    "emoji": "🏊",
+    "nonsense": false,
+    "audio": "swam.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w189",
+    "word": "swan",
+    "blend": "SW",
+    "family": "an",
+    "emoji": "🦢",
+    "nonsense": false,
+    "audio": "swan.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w190",
+    "word": "swap",
+    "blend": "SW",
+    "family": "ap",
+    "emoji": "🔄",
+    "nonsense": false,
+    "audio": "swap.mp3",
+    "difficulty": 1
+  },
+  {
+    "id": "w191",
+    "word": "swat",
+    "blend": "SW",
+    "family": "at",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "swat.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w192",
+    "word": "swed",
+    "blend": "SW",
+    "family": "ed",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "swed.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w193",
+    "word": "sweg",
+    "blend": "SW",
+    "family": "eg",
+    "emoji": "✨",
+    "nonsense": true,
+    "audio": "sweg.mp3",
+    "difficulty": 3
+  },
+  {
+    "id": "w197",
+    "word": "swig",
+    "blend": "SW",
+    "family": "ig",
+    "emoji": "🥤",
+    "nonsense": false,
+    "audio": "swig.mp3",
+    "difficulty": 2
+  },
+  {
+    "id": "w211",
+    "word": "swim",
+    "blend": "SW",
+    "family": "im",
+    "emoji": "🏊‍♀️",
+    "nonsense": false,
+    "audio": "swim.mp3",
+    "difficulty": 2
+  }
+]

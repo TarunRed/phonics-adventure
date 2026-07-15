@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap");
+
+:root {
+  --font-display: "Baloo 2", "Quicksand", system-ui, sans-serif;
+  --font-body: "Quicksand", system-ui, sans-serif;
+
+  /* Soft, low-saturation palette so nothing overstimulates young players. */
+  --color-bg: #fef9f2;
+  --color-bg-alt: #f2f7fb;
+  --color-surface: #ffffff;
+  --color-ink: #4a4458;
+  --color-ink-soft: #7a7488;
+
+  --color-sun: #ffc15e;
+  --color-sun-dark: #f5a623;
+  --color-coral: #ff9f6b;
+  --color-coral-dark: #f0824a;
+  --color-mint: #8fd6a4;
+  --color-mint-dark: #63bd82;
+  --color-sky: #7ec8e3;
+  --color-sky-dark: #4fa9cb;
+  --color-lilac: #c9a0ff;
+  --color-lilac-dark: #a970f0;
+  --color-blush: #ff9ac1;
+  --color-blush-dark: #f06ba0;
+
+  --color-success: #63bd82;
+  --color-success-bg: #e6f7ec;
+  --color-warning: #ffc15e;
+  --color-error: #ff9ac1;
+  --color-error-bg: #fff0f6;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 8px 24px rgba(122, 116, 136, 0.14);
+  --shadow-pressed: 0 2px 8px rgba(122, 116, 136, 0.18);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+/* Respect reduced-motion preferences for kids sensitive to animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

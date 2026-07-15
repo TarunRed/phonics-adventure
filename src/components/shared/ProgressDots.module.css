@@ -1,0 +1,23 @@
+.dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  border: 2px solid var(--color-surface);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.done {
+  background: var(--color-mint);
+}
+
+.active {
+  background: var(--color-coral);
+  transform: scale(1.3);
+}

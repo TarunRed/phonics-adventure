@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Letter Sounds",
+    "shortName": "Sounds",
+    "description": "Hear and identify individual letter sounds.",
+    "game": "BlendExplorer",
+    "ageGroup": ["nursery"],
+    "icon": "🔤"
+  },
+  {
+    "id": 2,
+    "name": "Blend Recognition",
+    "shortName": "Blends",
+    "description": "Recognise how two letter sounds blend together.",
+    "game": "SpinWheel",
+    "ageGroup": ["nursery", "lkg"],
+    "icon": "🌀"
+  },
+  {
+    "id": 3,
+    "name": "Word Family Practice",
+    "shortName": "Families",
+    "description": "Practise common word family endings.",
+    "game": "BuildWord",
+    "ageGroup": ["lkg"],
+    "icon": "🧩"
+  },
+  {
+    "id": 4,
+    "name": "Picture Matching",
+    "shortName": "Matching",
+    "description": "Match spoken and written words to pictures.",
+    "game": "DragPicture",
+    "ageGroup": ["lkg", "ukg"],
+    "icon": "🖼️"
+  },
+  {
+    "id": 5,
+    "name": "Independent Reading",
+    "shortName": "Reading",
+    "description": "Read whole words independently, without picture support.",
+    "game": "ReadingChallenge",
+    "ageGroup": ["ukg"],
+    "icon": "📖"
+  }
+]

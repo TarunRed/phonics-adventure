@@ -1,0 +1,64 @@
+.chip {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 3px solid transparent;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  touch-action: manipulation;
+}
+
+.chip:not(:disabled):active {
+  transform: scale(0.93);
+}
+
+.empty {
+  background: var(--color-bg-alt);
+  border: 3px dashed var(--color-sky-dark);
+  box-shadow: none;
+}
+
+.filled {
+  background: var(--color-sky);
+  color: white;
+}
+
+.correct {
+  background: var(--color-success);
+  color: white;
+  border-color: var(--color-success);
+}
+
+.incorrect {
+  border-color: var(--color-error);
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 480px) {
+  .chip {
+    width: 52px;
+    height: 52px;
+    font-size: 1.6rem;
+  }
+}

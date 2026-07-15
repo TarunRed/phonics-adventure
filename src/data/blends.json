@@ -1,0 +1,10 @@
+[
+  { "id": "SC", "letters": "sc", "sounds": ["s", "k"], "exampleWord": "scan", "colour": "#FF9F6B" },
+  { "id": "SK", "letters": "sk", "sounds": ["s", "k"], "exampleWord": "skip", "colour": "#FFC15E" },
+  { "id": "SL", "letters": "sl", "sounds": ["s", "l"], "exampleWord": "slide", "colour": "#8FD6A4" },
+  { "id": "SM", "letters": "sm", "sounds": ["s", "m"], "exampleWord": "smile", "colour": "#7EC8E3" },
+  { "id": "SN", "letters": "sn", "sounds": ["s", "n"], "exampleWord": "snap", "colour": "#9AA9FF" },
+  { "id": "SP", "letters": "sp", "sounds": ["s", "p"], "exampleWord": "spot", "colour": "#C9A0FF" },
+  { "id": "ST", "letters": "st", "sounds": ["s", "t"], "exampleWord": "stop", "colour": "#FF9AC1" },
+  { "id": "SW", "letters": "sw", "sounds": ["s", "w"], "exampleWord": "swim", "colour": "#7EDCC0" }
+]
