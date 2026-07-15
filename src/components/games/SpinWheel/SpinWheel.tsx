@@ -7,11 +7,18 @@ import { EmojiTile } from "../../shared/EmojiTile";
 import { AudioButton } from "../../shared/AudioButton";
 import { Button } from "../../shared/Button";
 import { HintBubble } from "../../shared/HintBubble";
+import { PronunciationCheck } from "../../shared/PronunciationCheck";
 import styles from "./SpinWheel.module.css";
 
 const SEGMENT_COLOURS = ["#FF9F6B", "#FFC15E", "#8FD6A4", "#7EC8E3", "#9AA9FF", "#C9A0FF"];
 
-/** Game 3: Spin the Wheel — spin lands on a blend, then find the matching word. */
+type Status = "idle" | "spinning" | "verifyBlend" | "playing" | "verifyWord" | "done";
+
+/**
+ * Game 3: Spin the Wheel — spin lands on a blend, say the blend sound to
+ * check your pronunciation, find the matching picture, then say the whole
+ * word to finish.
+ */
 export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
   const segments = useMemo(() => {
     const uniqueByBlend = new Map<string, PhonicsWord>();
@@ -26,7 +33,8 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
   const [options, setOptions] = useState<PhonicsWord[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [incorrectCount, setIncorrectCount] = useState(0);
-  const [status, setStatus] = useState<"idle" | "spinning" | "playing" | "done">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [pendingResult, setPendingResult] = useState<{ correct: boolean; tries: number } | null>(null);
 
   const landedWord = landedIndex !== null ? segments[landedIndex] : null;
   const escalation = useErrorEscalation(incorrectCount, landedWord ?? target);
@@ -44,31 +52,49 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
     if (status !== "spinning") return;
     const targetIndex = Math.max(0, segments.findIndex((s) => s.blend === target.blend));
     setLandedIndex(targetIndex);
-    setStatus("playing");
     const landed = segments[targetIndex];
-    speak(`${landed.blend}. Find a word that starts with ${landed.blend}.`);
+    speak(landed.blend.toLowerCase());
     const distractors = pickRandom(
       words.filter((w) => w.blend !== landed.blend),
       2
     );
     setOptions(shuffle([landed, ...distractors]));
+    setStatus("verifyBlend");
+  };
+
+  const startPicking = () => {
+    if (!landedWord) return;
+    speak(`Find a word that starts with ${landedWord.blend}.`);
+    setStatus("playing");
   };
 
   const handlePick = (wordId: string) => {
     if (status !== "playing" || !landedWord) return;
     setSelected(wordId);
     if (wordId === landedWord.id) {
-      setStatus("done");
-      setTimeout(() => onResult(true, landedWord, incorrectCount + 1), 1000);
+      const tries = incorrectCount + 1;
+      setTimeout(() => {
+        setPendingResult({ correct: true, tries });
+        setStatus("verifyWord");
+      }, 1000);
     } else {
       const tries = incorrectCount + 1;
       setIncorrectCount(tries);
       setTimeout(() => setSelected(null), 500);
       if (tries >= 8) {
-        setStatus("done");
-        setTimeout(() => onResult(false, landedWord, tries), 1600);
+        speak(landedWord.word);
+        setTimeout(() => {
+          setPendingResult({ correct: false, tries });
+          setStatus("verifyWord");
+        }, 1600);
       }
     }
+  };
+
+  const finishRound = () => {
+    if (!pendingResult || !landedWord) return;
+    onResult(pendingResult.correct, landedWord, pendingResult.tries);
+    setStatus("done");
   };
 
   return (
@@ -104,7 +130,16 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
       )}
       {status === "spinning" && <p className={styles.spinningText}>Spinning...</p>}
 
-      {status !== "idle" && status !== "spinning" && landedWord && (
+      {status === "verifyBlend" && landedWord && (
+        <PronunciationCheck
+          target={landedWord.blend}
+          instruction="Say the sound it landed on:"
+          continueLabel="Find the picture"
+          onContinue={startPicking}
+        />
+      )}
+
+      {status === "playing" && landedWord && (
         <div className={styles.challenge}>
           <div className={styles.challengeHeading}>
             <h3>Find a word that starts with "{landedWord.blend}"</h3>
@@ -128,7 +163,18 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
         </div>
       )}
 
-      {hintsEnabled && escalation.message && <HintBubble message={escalation.message} tone={incorrectCount >= 2 ? "hint" : "encourage"} />}
+      {status === "verifyWord" && landedWord && (
+        <PronunciationCheck
+          target={landedWord.word}
+          instruction="Now read and say the whole word:"
+          continueLabel="Finish"
+          onContinue={finishRound}
+        />
+      )}
+
+      {hintsEnabled && status === "playing" && escalation.message && (
+        <HintBubble message={escalation.message} tone={incorrectCount >= 2 ? "hint" : "encourage"} />
+      )}
     </div>
   );
 }

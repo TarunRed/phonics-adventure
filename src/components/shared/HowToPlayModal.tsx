@@ -14,8 +14,9 @@ const INSTRUCTIONS: Record<GameId, string[]> = {
   ],
   SpinWheel: [
     'Tap "Spin the Wheel!" to spin.',
-    "When it stops, read the blend it landed on.",
+    "When it stops, tap 🎤 and say the blend sound to check yourself.",
     "Tap the picture whose word starts with that blend.",
+    "Finally, read and say the whole word out loud to finish.",
   ],
   BuildWord: [
     "Tap the letter tiles, in order, to fill the blanks and spell the word.",

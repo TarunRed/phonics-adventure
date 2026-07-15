@@ -154,9 +154,11 @@ export function Play() {
         />
       </div>
 
-      <div className={styles.recordArea}>
-        <RecordButton key={round.id} targetWord={round.words[0].word} />
-      </div>
+      {round.game !== "SpinWheel" && (
+        <div className={styles.recordArea}>
+          <RecordButton key={round.id} targetWord={round.words[0].word} />
+        </div>
+      )}
 
       {celebrating && <Celebration onDone={handleCelebrationDone} />}
       {showHelp && <HowToPlayModal game={round.game} onClose={() => setShowHelp(false)} />}

@@ -1,0 +1,111 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  animation: rise 0.3s ease;
+}
+
+.instruction {
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.targetText {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--color-ink);
+}
+
+.micButton {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-blush);
+  color: white;
+  font-size: 2rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease;
+  touch-action: manipulation;
+}
+
+.micButton:not(:disabled):active {
+  transform: scale(0.92);
+}
+
+.micButton:disabled {
+  opacity: 0.6;
+}
+
+.recording {
+  background: var(--color-blush-dark);
+  animation: pulse 0.9s ease infinite;
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: var(--color-blush-dark);
+  font-weight: 700;
+}
+
+.correctText {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.incorrectText {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.retryButton {
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-alt);
+  color: var(--color-ink);
+  padding: 12px 18px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  touch-action: manipulation;
+}
+
+.retryButton:active {
+  transform: scale(0.96);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(240, 107, 160, 0.4);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 12px rgba(240, 107, 160, 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
