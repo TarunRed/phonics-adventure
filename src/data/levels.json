@@ -5,8 +5,11 @@
     "shortName": "Sounds",
     "description": "Hear and identify individual letter sounds.",
     "game": "BlendExplorer",
+    "gameName": "Blend Explorer",
+    "gameTagline": "Watch two letters blend into a whole word.",
     "ageGroup": ["nursery"],
-    "icon": "🔤"
+    "icon": "🔤",
+    "colour": "#FF9F6B"
   },
   {
     "id": 2,
@@ -14,8 +17,11 @@
     "shortName": "Blends",
     "description": "Recognise how two letter sounds blend together.",
     "game": "SpinWheel",
+    "gameName": "Spin the Wheel",
+    "gameTagline": "Spin to land on a blend, then find a matching word.",
     "ageGroup": ["nursery", "lkg"],
-    "icon": "🌀"
+    "icon": "🎡",
+    "colour": "#FFC15E"
   },
   {
     "id": 3,
@@ -23,8 +29,11 @@
     "shortName": "Families",
     "description": "Practise common word family endings.",
     "game": "BuildWord",
+    "gameName": "Build the Word",
+    "gameTagline": "Tap letters into place to spell the word.",
     "ageGroup": ["lkg"],
-    "icon": "🧩"
+    "icon": "🧩",
+    "colour": "#8FD6A4"
   },
   {
     "id": 4,
@@ -32,8 +41,11 @@
     "shortName": "Matching",
     "description": "Match spoken and written words to pictures.",
     "game": "DragPicture",
+    "gameName": "Drag Picture to Word",
+    "gameTagline": "Match the picture to the word.",
     "ageGroup": ["lkg", "ukg"],
-    "icon": "🖼️"
+    "icon": "🖼️",
+    "colour": "#7EC8E3"
   },
   {
     "id": 5,
@@ -41,7 +53,10 @@
     "shortName": "Reading",
     "description": "Read whole words independently, without picture support.",
     "game": "ReadingChallenge",
+    "gameName": "Reading Challenge",
+    "gameTagline": "Read the word, then find its picture.",
     "ageGroup": ["ukg"],
-    "icon": "📖"
+    "icon": "📖",
+    "colour": "#C9A0FF"
   }
 ]

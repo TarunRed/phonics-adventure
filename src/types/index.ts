@@ -38,8 +38,11 @@ export interface PhonicsLevel {
   shortName: string;
   description: string;
   game: GameId;
+  gameName: string;
+  gameTagline: string;
   ageGroup: AgeGroup[];
   icon: string;
+  colour: string;
 }
 
 export type LearnerLevel = 1 | 2 | 3;

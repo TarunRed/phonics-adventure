@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
 import { buildSession, type Round } from "../../utils/sessionBuilder";
-import { getBlend } from "../../utils/phonicsData";
+import { getBlend, getLevelByGame } from "../../utils/phonicsData";
 import type { GameId } from "../../types";
 import { Header } from "../../components/shared/Header";
 import { ProgressDots } from "../../components/shared/ProgressDots";
@@ -77,6 +77,7 @@ export function Play() {
 
   const round = rounds[roundIndex];
   const blend = useMemo(() => getBlend(round.words[0].blend), [round]);
+  const level = useMemo(() => getLevelByGame(round.game), [round.game]);
   const GameComponent = GAME_COMPONENTS[round.game];
 
   const handleResult = (correct: boolean, word: (typeof round.words)[number], tries: number) => {
@@ -112,11 +113,16 @@ export function Play() {
 
   return (
     <div className={styles.page}>
-      <Header title={`Blend ${blend.id}`} />
+      <Header title={`${level.icon} ${level.gameName}`} />
 
       <div className={styles.meta}>
         <ProgressDots total={rounds.length} current={roundIndex} />
-        {!config.hideTimer && <span className={styles.timer}>⏱ {formatTime(elapsedMs)}</span>}
+        <div className={styles.metaRow}>
+          <span className={styles.blendBadge} style={{ background: blend.colour }}>
+            Blend {blend.id}
+          </span>
+          {!config.hideTimer && <span className={styles.timer}>⏱ {formatTime(elapsedMs)}</span>}
+        </div>
       </div>
 
       <div className={styles.gameArea} style={{ borderColor: blend.colour }}>

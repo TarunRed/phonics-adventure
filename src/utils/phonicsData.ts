@@ -1,7 +1,7 @@
 import wordsData from "../data/words.json";
 import blendsData from "../data/blends.json";
 import levelsData from "../data/levels.json";
-import type { Blend, PhonicsLevel, PhonicsWord } from "../types";
+import type { Blend, GameId, PhonicsLevel, PhonicsWord } from "../types";
 
 /**
  * All phonics content access goes through this module. If the JSON files
@@ -27,6 +27,12 @@ export function getWordsByFamily(family: string): PhonicsWord[] {
   return allWords.filter((w) => w.family === family);
 }
 
+export function getLevelByGame(game: GameId): PhonicsLevel {
+  const level = allLevels.find((l) => l.game === game);
+  if (!level) throw new Error(`No level configured for game: ${game}`);
+  return level;
+}
+
 export function shuffle<T>(items: T[]): T[] {
   const copy = [...items];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -44,9 +50,4 @@ export function pickRandom<T>(items: T[], count: number): T[] {
 export function pickDistractors(target: PhonicsWord, pool: PhonicsWord[], count: number): PhonicsWord[] {
   const candidates = pool.filter((w) => w.id !== target.id && !w.nonsense && w.family !== target.family);
   return pickRandom(candidates, count);
-}
-
-export function randomBlendId(exclude?: string): string {
-  const pool = exclude ? allBlends.filter((b) => b.id !== exclude) : allBlends;
-  return pickRandom(pool, 1)[0].id;
 }

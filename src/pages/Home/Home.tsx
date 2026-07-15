@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { allBlends, randomBlendId } from "../../utils/phonicsData";
+import { allLevels } from "../../utils/phonicsData";
 import { Button } from "../../components/shared/Button";
 import type { PlayConfig } from "../Play/Play";
 import styles from "./Home.module.css";
@@ -9,7 +9,7 @@ export function Home() {
 
   const startIndependent = () => {
     const config: Partial<PlayConfig> = {
-      blend: randomBlendId(),
+      blend: null,
       family: null,
       onlyGame: null,
       roundCount: 10,
@@ -19,8 +19,16 @@ export function Home() {
     navigate("/play", { state: config });
   };
 
-  const startBlend = (blendId: string) => {
-    navigate(`/blend/${blendId}`);
+  const startGame = (game: PlayConfig["onlyGame"]) => {
+    const config: Partial<PlayConfig> = {
+      blend: null,
+      family: null,
+      onlyGame: game,
+      roundCount: 10,
+      hintsEnabled: true,
+      hideTimer: false,
+    };
+    navigate("/play", { state: config });
   };
 
   return (
@@ -35,17 +43,18 @@ export function Home() {
         Play
       </Button>
 
-      <p className={styles.blendCaption}>Or pick a blend to choose a game:</p>
-      <div className={styles.blendGrid}>
-        {allBlends.map((blend) => (
+      <p className={styles.gameCaption}>Or pick a game — practise every blend as you play:</p>
+      <div className={styles.gameGrid}>
+        {allLevels.map((level) => (
           <button
-            key={blend.id}
-            className={styles.blendTile}
-            style={{ background: blend.colour }}
-            onClick={() => startBlend(blend.id)}
+            key={level.id}
+            className={styles.gameTile}
+            style={{ background: level.colour }}
+            onClick={() => startGame(level.game)}
           >
-            <span className={styles.blendLetters}>{blend.id}</span>
-            <span className={styles.blendWord}>{blend.exampleWord}</span>
+            <span className={styles.gameIcon}>{level.icon}</span>
+            <span className={styles.gameName}>{level.gameName}</span>
+            <span className={styles.gameTagline}>{level.gameTagline}</span>
           </button>
         ))}
       </div>

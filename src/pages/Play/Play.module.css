@@ -12,6 +12,22 @@
   padding: 4px 20px 12px;
 }
 
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.blendBadge {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: white;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  transition: background 0.2s ease;
+}
+
 .timer {
   font-family: var(--font-display);
   font-weight: 700;
