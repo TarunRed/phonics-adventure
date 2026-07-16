@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { GameProps, PhonicsWord } from "../../../types";
 import { pickRandom, shuffle } from "../../../utils/phonicsData";
-import { speak } from "../../../utils/speech";
+import { speak, stretchSound } from "../../../utils/speech";
 import { useErrorEscalation } from "../../../hooks/useErrorEscalation";
 import { EmojiTile } from "../../shared/EmojiTile";
 import { AudioButton } from "../../shared/AudioButton";
@@ -21,12 +21,13 @@ function speakBlendSounds(blend: string): void {
   speak(blend.toLowerCase());
 }
 
-type Status = "idle" | "spinning" | "verifyBlend" | "playing" | "verifyWord" | "done";
+type Status = "idle" | "spinning" | "verifyPhoneme1" | "verifyPhoneme2" | "verifyBlend" | "playing" | "verifyWord" | "done";
 
 /**
- * Game 3: Spin the Wheel — spin lands on a blend, say the blend sound to
- * check your pronunciation, find the matching picture, then say the whole
- * word to finish.
+ * Game 3: Spin the Wheel — spin lands on a blend, identify it the
+ * synthetic-phonics way (each phoneme said in isolation, then blended —
+ * e.g. /s/, /p/, then /sp/), find the matching picture, then say the
+ * whole word to finish.
  */
 export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
   const segments = useMemo(() => {
@@ -46,6 +47,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
   const [pendingResult, setPendingResult] = useState<{ correct: boolean; tries: number } | null>(null);
 
   const landedWord = landedIndex !== null ? segments[landedIndex] : null;
+  const [phoneme1, phoneme2] = (landedWord ?? target).blend.toLowerCase().split("");
   const escalation = useErrorEscalation(incorrectCount, landedWord ?? target);
 
   const handleSpin = () => {
@@ -62,13 +64,16 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
     const targetIndex = Math.max(0, segments.findIndex((s) => s.blend === target.blend));
     setLandedIndex(targetIndex);
     const landed = segments[targetIndex];
-    speakBlendSounds(landed.blend);
+    // No auto-announcement here: the wheel already shows the blend visually,
+    // and each phoneme step below has its own on-demand "Hear it" button —
+    // saying the whole blend upfront would pre-empt the point of isolating
+    // each sound before blending them.
     const distractors = pickRandom(
       words.filter((w) => w.blend !== landed.blend),
       2
     );
     setOptions(shuffle([landed, ...distractors]));
-    setStatus("verifyBlend");
+    setStatus("verifyPhoneme1");
   };
 
   const startPicking = () => {
@@ -139,10 +144,33 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
       )}
       {status === "spinning" && <p className={styles.spinningText}>Spinning...</p>}
 
+      {status === "verifyPhoneme1" && landedWord && (
+        <PronunciationCheck
+          target={phoneme1}
+          displayText={`/${phoneme1}/`}
+          instruction="Say the first sound:"
+          continueLabel="Next sound"
+          onContinue={() => setStatus("verifyPhoneme2")}
+          onReadAloud={() => speak(stretchSound(phoneme1))}
+        />
+      )}
+
+      {status === "verifyPhoneme2" && landedWord && (
+        <PronunciationCheck
+          target={phoneme2}
+          displayText={`/${phoneme2}/`}
+          instruction="Say the second sound:"
+          continueLabel="Blend them"
+          onContinue={() => setStatus("verifyBlend")}
+          onReadAloud={() => speak(stretchSound(phoneme2))}
+        />
+      )}
+
       {status === "verifyBlend" && landedWord && (
         <PronunciationCheck
           target={landedWord.blend.toLowerCase()}
-          instruction="Say the sound it landed on:"
+          displayText={`/${landedWord.blend.toLowerCase()}/`}
+          instruction="Now blend them together:"
           continueLabel="Find the picture"
           onContinue={startPicking}
           onReadAloud={() => speakBlendSounds(landedWord.blend)}

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSpeechRecognizer } from "../../hooks/useSpeechRecognizer";
 import { speak } from "../../utils/speech";
-import { AudioButton } from "./AudioButton";
 import { Button } from "./Button";
 import styles from "./PronunciationCheck.module.css";
 
@@ -10,13 +9,16 @@ const MAX_TOTAL_ATTEMPTS = 5;
 const AUTO_ADVANCE_DELAY_MS = 1400;
 
 interface PronunciationCheckProps {
-  /** What the child needs to say — also what gets shown as text (never hidden here). */
+  /** What the child needs to say, and what gets matched against speech recognition. */
   target: string;
+  /** What's shown on screen for `target` — defaults to target itself (lowercased). */
+  displayText?: string;
   instruction: string;
   onContinue: () => void;
   continueLabel?: string;
-  /** How to read `target` aloud after 3 misses. Defaults to speaking it as-is; pass a
-   *  custom sound (e.g. stretched letter sounds for a blend) to override. */
+  /** How to pronounce `target` — used for both the on-demand "Hear it" button and the
+   *  3-miss read-aloud. Defaults to speaking it as-is; pass a custom sound (e.g.
+   *  stretched letter sounds) to override for both. */
   onReadAloud?: () => void;
 }
 
@@ -33,7 +35,14 @@ interface PronunciationCheckProps {
  * Getting it right still needs a manual tap to continue, so the win feels
  * earned rather than auto-skipped past.
  */
-export function PronunciationCheck({ target, instruction, onContinue, continueLabel = "Continue", onReadAloud }: PronunciationCheckProps) {
+export function PronunciationCheck({
+  target,
+  displayText,
+  instruction,
+  onContinue,
+  continueLabel = "Continue",
+  onReadAloud,
+}: PronunciationCheckProps) {
   const { state, listen, stop, reset } = useSpeechRecognizer();
   const [attemptCount, setAttemptCount] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -41,6 +50,11 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
   onContinueRef.current = onContinue;
   const onReadAloudRef = useRef(onReadAloud);
   onReadAloudRef.current = onReadAloud;
+
+  const playTarget = () => {
+    if (onReadAloudRef.current) onReadAloudRef.current();
+    else speak(target);
+  };
 
   useEffect(() => {
     reset();
@@ -89,8 +103,10 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
     <div className={styles.wrap}>
       <p className={styles.instruction}>{instruction}</p>
       <div className={styles.targetRow}>
-        <p className={styles.targetText}>{target.toLowerCase()}</p>
-        <AudioButton text={target} size="sm" label="Hear it" />
+        <p className={styles.targetText}>{displayText ?? target.toLowerCase()}</p>
+        <button type="button" className={styles.hearButton} onClick={playTarget} aria-label="Hear it">
+          🔈
+        </button>
       </div>
 
       {!gaveUp && state === "idle" && (
