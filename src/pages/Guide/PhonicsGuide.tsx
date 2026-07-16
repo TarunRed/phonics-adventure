@@ -1,20 +1,54 @@
 import { useState } from "react";
 import { phonicsGuide } from "../../utils/phonicsData";
-import { speak } from "../../utils/speech";
+import { speak, stretchSound } from "../../utils/speech";
 import type { PhonicsSound, PhonicsSoundCategory } from "../../types";
 import { Header } from "../../components/shared/Header";
 import styles from "./PhonicsGuide.module.css";
 
 /**
- * Plays "the sound itself" for a guide entry. S Blends use the exact same
- * approach as Spin the Wheel's blend-verification step (the letters spoken
- * as one continuous sound, e.g. speak("sp")) so a child hears the identical
- * pronunciation here and in the games. Every other category speaks its
- * reference word instead, since spelling codes like "a_e" or "igh" aren't
- * real pronounceable text on their own.
+ * How to play "the sound itself" (as opposed to a whole example word) for
+ * each category. The sound button must say the sound, not jump straight to
+ * a word — the reference word is for the "examples" section below it.
+ *
+ *  - "stretch": a single consonant phoneme. Pulled from the symbol (e.g.
+ *    "/z/" -> "z"), not the spelling — some rows spell a /z/ sound with
+ *    "s" (as in "his"), and stretching the letter "s" would say the wrong
+ *    sound. Reuses stretchSound(), the same pure-sound/no-schwa logic
+ *    every game already uses.
+ *  - "unit": a multi-letter chunk (digraph or blend) spoken as one
+ *    continuous sound, same approach as Spin the Wheel's blend step.
+ *  - "word": sounds that can't be isolated as plain text at all (vowel
+ *    sounds, schwa) — TTS has no way to say a bare "ă" without a word
+ *    around it, so these fall back to the reference word.
  */
+const CATEGORY_SOUND_MODE: Record<string, "stretch" | "unit" | "word"> = {
+  schwa: "word",
+  "short-vowels": "word",
+  "long-vowels": "word",
+  "vowel-r": "word",
+  "other-vowel-teams": "word",
+  consonants: "stretch",
+  "soft-consonants": "stretch",
+  "silent-consonants": "stretch",
+  digraphs: "unit",
+  "s-blends": "unit",
+};
+
+// A couple of digraph rows are really just a single consonant phoneme
+// spelled a different way (e.g. "ck" for /k/, same sound as the "k" row
+// in Consonants) — those need the symbol-derived stretch treatment too,
+// not "speak the spelling as one unit".
+const SOUND_MODE_OVERRIDE: Record<string, "stretch" | "unit" | "word"> = {
+  "d-ck": "stretch",
+};
+
 function playSound(category: PhonicsSoundCategory, sound: PhonicsSound): void {
-  if (category.id === "s-blends") {
+  const mode = SOUND_MODE_OVERRIDE[sound.id] ?? CATEGORY_SOUND_MODE[category.id] ?? "word";
+
+  if (mode === "stretch") {
+    const letter = sound.symbol.replace(/\//g, "");
+    speak(stretchSound(letter));
+  } else if (mode === "unit") {
     speak(sound.spellings[0].toLowerCase());
   } else {
     speak(sound.referenceWord.split(",")[0].trim());
