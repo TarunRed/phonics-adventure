@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { GameProps, PhonicsWord } from "../../../types";
 import { pickRandom, shuffle } from "../../../utils/phonicsData";
-import { speak } from "../../../utils/speech";
+import { speak, speakSequence, stretchSound } from "../../../utils/speech";
 import { useErrorEscalation } from "../../../hooks/useErrorEscalation";
 import { EmojiTile } from "../../shared/EmojiTile";
 import { AudioButton } from "../../shared/AudioButton";
@@ -11,6 +11,11 @@ import { PronunciationCheck } from "../../shared/PronunciationCheck";
 import styles from "./SpinWheel.module.css";
 
 const SEGMENT_COLOURS = ["#FF9F6B", "#FFC15E", "#8FD6A4", "#7EC8E3", "#9AA9FF", "#C9A0FF"];
+
+/** Speaks each letter of a blend as its stretched phonics sound (e.g. "sn" -> "sss", "n") rather than letter names. */
+function speakBlendSounds(blend: string): void {
+  speakSequence(blend.toLowerCase().split("").map(stretchSound));
+}
 
 type Status = "idle" | "spinning" | "verifyBlend" | "playing" | "verifyWord" | "done";
 
@@ -53,7 +58,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
     const targetIndex = Math.max(0, segments.findIndex((s) => s.blend === target.blend));
     setLandedIndex(targetIndex);
     const landed = segments[targetIndex];
-    speak(landed.blend.toLowerCase());
+    speakBlendSounds(landed.blend);
     const distractors = pickRandom(
       words.filter((w) => w.blend !== landed.blend),
       2
@@ -64,7 +69,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
 
   const startPicking = () => {
     if (!landedWord) return;
-    speak(`Find a word that starts with ${landedWord.blend}.`);
+    speak(`Find a word that starts with ${landedWord.blend.toLowerCase()}.`);
     setStatus("playing");
   };
 
@@ -132,10 +137,11 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
 
       {status === "verifyBlend" && landedWord && (
         <PronunciationCheck
-          target={landedWord.blend}
+          target={landedWord.blend.toLowerCase()}
           instruction="Say the sound it landed on:"
           continueLabel="Find the picture"
           onContinue={startPicking}
+          onReadAloud={() => speakBlendSounds(landedWord.blend)}
         />
       )}
 
@@ -144,7 +150,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
           <div className={styles.challengeHeading}>
             <h3>Find a word that starts with "{landedWord.blend}"</h3>
             <AudioButton
-              text={`${landedWord.blend}. Find a word that starts with ${landedWord.blend}.`}
+              text={`${landedWord.blend.toLowerCase()}. Find a word that starts with ${landedWord.blend.toLowerCase()}.`}
               size="sm"
               label="Hear the challenge again"
             />

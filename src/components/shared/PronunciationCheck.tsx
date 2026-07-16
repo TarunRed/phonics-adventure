@@ -14,6 +14,9 @@ interface PronunciationCheckProps {
   instruction: string;
   onContinue: () => void;
   continueLabel?: string;
+  /** How to read `target` aloud after 3 misses. Defaults to speaking it as-is; pass a
+   *  custom sound (e.g. stretched letter sounds for a blend) to override. */
+  onReadAloud?: () => void;
 }
 
 /**
@@ -29,12 +32,14 @@ interface PronunciationCheckProps {
  * Getting it right still needs a manual tap to continue, so the win feels
  * earned rather than auto-skipped past.
  */
-export function PronunciationCheck({ target, instruction, onContinue, continueLabel = "Continue" }: PronunciationCheckProps) {
+export function PronunciationCheck({ target, instruction, onContinue, continueLabel = "Continue", onReadAloud }: PronunciationCheckProps) {
   const { state, listen, stop, reset } = useSpeechRecognizer();
   const [attemptCount, setAttemptCount] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const onContinueRef = useRef(onContinue);
   onContinueRef.current = onContinue;
+  const onReadAloudRef = useRef(onReadAloud);
+  onReadAloudRef.current = onReadAloud;
 
   useEffect(() => {
     reset();
@@ -54,7 +59,8 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
   useEffect(() => {
     if (attemptCount === 0 || state === "correct") return;
     if (attemptCount === MAX_BASIC_ATTEMPTS) {
-      speak(target);
+      if (onReadAloudRef.current) onReadAloudRef.current();
+      else speak(target);
     }
     if (attemptCount >= MAX_TOTAL_ATTEMPTS) {
       const timer = setTimeout(() => onContinueRef.current(), AUTO_ADVANCE_DELAY_MS);
