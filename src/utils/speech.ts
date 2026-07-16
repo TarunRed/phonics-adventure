@@ -111,9 +111,33 @@ export function stopSpeech(): void {
   currentUtterance = null;
 }
 
-/** Stretches a letter sound for blending demos, e.g. "s" -> "sssss". */
+const STRETCHABLE_SOUNDS = new Set(["s", "m", "n", "l", "f", "v", "z", "r"]);
+
+// Stop/plosive consonants can't be held like "sss" can, and a bare single
+// letter gets read as its alphabet NAME by TTS (there's no other way for it
+// to interpret one lone character) — e.g. "p" comes out "pee", not the
+// clipped phonics sound it makes in "spin". Respelling with a trailing "uh"
+// isn't a perfect pure stop sound either, but it's much closer than the
+// letter's name, and is a standard approximation used across phonics apps.
+const STOP_CONSONANT_SOUNDS: Record<string, string> = {
+  b: "buh",
+  c: "kuh",
+  d: "duh",
+  g: "guh",
+  h: "huh",
+  j: "juh",
+  k: "kuh",
+  p: "puh",
+  q: "kwuh",
+  t: "tuh",
+  w: "wuh",
+  x: "ks",
+  y: "yuh",
+};
+
+/** Gives a letter's phonics sound for blending demos, e.g. "s" -> "ssss", "p" -> "puh" (never its alphabet name). */
 export function stretchSound(letter: string): string {
-  const stretchable = new Set(["s", "m", "n", "l", "f", "v", "z", "r"]);
   const lower = letter.toLowerCase();
-  return stretchable.has(lower) ? lower.repeat(4) : lower;
+  if (STRETCHABLE_SOUNDS.has(lower)) return lower.repeat(4);
+  return STOP_CONSONANT_SOUNDS[lower] ?? lower;
 }

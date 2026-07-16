@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { GameProps } from "../../../types";
 import { shuffle } from "../../../utils/phonicsData";
-import { speak, speakSequence, stretchSound } from "../../../utils/speech";
+import { speak, stretchSound } from "../../../utils/speech";
 import { EmojiTile } from "../../shared/EmojiTile";
 import { Button } from "../../shared/Button";
 import styles from "./BlendExplorer.module.css";
@@ -25,7 +25,10 @@ export function BlendExplorer({ words, onResult }: GameProps) {
 
   const advance = () => {
     if (stage === "letters") {
-      speakSequence([stretchSound(letter1), stretchSound(letter2), target.blend.toLowerCase()]);
+      // Tapping the tiles already let them hear each letter's pure sound in
+      // isolation; blending is specifically saying them together with no
+      // gap, so this should be one continuous sound, not stretched pieces.
+      speak(target.blend.toLowerCase());
       setStage("blend");
     } else if (stage === "blend") {
       speak(target.word);
