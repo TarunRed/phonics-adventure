@@ -17,24 +17,29 @@ interface PronunciationCheckProps {
 }
 
 /**
- * An in-game "say it and check" step: record, get instant Correct/Try again
- * feedback from the browser's speech recognition, then continue.
+ * An in-game "say it and check" step, with four explicit stages the child
+ * controls: Start Recording -> Stop Recording -> Submit -> see the result.
+ * Stopping doesn't grade anything by itself — the recognizer has an answer
+ * ready internally, but it stays hidden until Submit is tapped, so nothing
+ * is revealed until the child chooses to check it.
  *
- * Retry ladder: 3 tries on their own; if still wrong, the app reads the
- * target aloud and gives 2 more tries; if it's still wrong after 5 total
- * attempts, it moves on automatically so no one gets stuck. Getting it
- * right at any point still needs a manual tap to continue, so the win
- * feels earned rather than auto-skipped past.
+ * Retry ladder: 3 submitted tries on their own; if still wrong, the app
+ * reads the target aloud and gives 2 more; if it's still wrong after 5
+ * total submissions, it moves on automatically so no one gets stuck.
+ * Getting it right still needs a manual tap to continue, so the win feels
+ * earned rather than auto-skipped past.
  */
 export function PronunciationCheck({ target, instruction, onContinue, continueLabel = "Continue" }: PronunciationCheckProps) {
   const { state, listen, stop, reset } = useSpeechRecognizer();
   const [attemptCount, setAttemptCount] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
   const onContinueRef = useRef(onContinue);
   onContinueRef.current = onContinue;
 
   useEffect(() => {
     reset();
     setAttemptCount(0);
+    setSubmitted(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
@@ -44,15 +49,8 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
     if (state === "unsupported") onContinueRef.current();
   }, [state]);
 
-  // Count each completed attempt (correct, incorrect, or a recognition error).
-  useEffect(() => {
-    if (state === "correct" || state === "incorrect" || state === "error") {
-      setAttemptCount((prev) => prev + 1);
-    }
-  }, [state]);
-
-  // React to the attempt count: read the word aloud after 3 misses, and
-  // move on automatically after 5 without ever getting it right.
+  // React to the (submitted) attempt count: read the word aloud after 3
+  // misses, and move on automatically after 5 without ever getting it right.
   useEffect(() => {
     if (attemptCount === 0 || state === "correct") return;
     if (attemptCount === MAX_BASIC_ATTEMPTS) {
@@ -64,9 +62,21 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
     }
   }, [attemptCount, state, target]);
 
-  const attempted = state === "correct" || state === "incorrect" || state === "error";
+  const graded = state === "correct" || state === "incorrect" || state === "error";
+  const readyToSubmit = graded && !submitted;
+  const revealed = graded && submitted;
   const gaveUp = attemptCount >= MAX_TOTAL_ATTEMPTS && state !== "correct";
   const justGotHelp = attemptCount === MAX_BASIC_ATTEMPTS && state !== "correct";
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    setAttemptCount((prev) => prev + 1);
+  };
+
+  const handleRecordAgain = () => {
+    setSubmitted(false);
+    listen(target);
+  };
 
   return (
     <div className={styles.wrap}>
@@ -87,19 +97,26 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
       {!gaveUp && state === "listening" && <p className={styles.hint}>Recording… tap to stop</p>}
       {!gaveUp && state === "checking" && <p className={styles.hint}>Checking…</p>}
 
-      {state === "correct" && <p className={styles.correctText}>✅ Nice pronunciation!</p>}
-      {!gaveUp && (state === "incorrect" || state === "error") && (
+      {!gaveUp && readyToSubmit && <p className={styles.hint}>Got it! Ready to check your answer?</p>}
+
+      {revealed && state === "correct" && <p className={styles.correctText}>✅ Nice pronunciation!</p>}
+      {revealed && !gaveUp && (state === "incorrect" || state === "error") && (
         <p className={styles.incorrectText}>{justGotHelp ? "👂 Listen, then try again!" : "🔁 Keep practising!"}</p>
       )}
       {gaveUp && <p className={styles.incorrectText}>Good try! Let's keep going.</p>}
 
       <div className={styles.actions}>
-        {!gaveUp && attempted && state !== "correct" && (
-          <button type="button" className={styles.retryButton} onClick={() => listen(target)} aria-label="Try again">
+        {!gaveUp && readyToSubmit && (
+          <Button variant="success" size="md" onClick={handleSubmit}>
+            Submit
+          </Button>
+        )}
+        {!gaveUp && revealed && state !== "correct" && (
+          <button type="button" className={styles.retryButton} onClick={handleRecordAgain} aria-label="Try again">
             🎤 Try again
           </button>
         )}
-        {state === "correct" && (
+        {revealed && state === "correct" && (
           <Button variant="success" size="md" onClick={onContinue}>
             {continueLabel}
           </Button>
