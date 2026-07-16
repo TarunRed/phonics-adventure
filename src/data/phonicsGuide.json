@@ -135,7 +135,7 @@
         "id": "ear",
         "symbol": "/ear/",
         "spellings": ["ere"],
-        "referenceWord": "hear (eer)",
+        "referenceWord": "hear",
         "practiceWords": ["hear", "deer", "here", "ear", "cheer"]
       },
       {
@@ -156,7 +156,7 @@
         "id": "ure",
         "symbol": "/ure/",
         "spellings": ["ure"],
-        "referenceWord": "lure (oor)",
+        "referenceWord": "lure",
         "practiceWords": ["lure", "cure", "pure", "sure", "tour"]
       }
     ]

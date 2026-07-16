@@ -1,18 +1,44 @@
+import audioManifestData from "../data/audioManifest.json";
+
 /**
- * Thin wrapper around the browser's SpeechSynthesis API.
+ * Speaks words/sounds through real, pre-rendered audio files where one
+ * exists (generated offline by scripts/generate-audio.mjs into
+ * public/audio/, listed in audioManifest.json), falling back to the
+ * browser's live SpeechSynthesis API for anything that isn't pre-recorded
+ * (free-typed sentences, unknown text). Every caller just calls speak(text)
+ * — which path it takes is decided here, transparently.
  *
- * The PRD calls for "AI-generated speech" per word, but the MVP has no
- * backend/audio pipeline, so we speak everything live via the Web Speech
- * API instead. Every word's `audio` field in words.json already points at
- * a future `snap.mp3`-style file — swapping this module for an <audio>
- * player is the only change needed once real recordings exist.
+ * Pre-rendered audio sidesteps a whole category of live-TTS problems this
+ * app hit repeatedly: voices reading letters as their alphabet NAME instead
+ * of their sound, inconsistent pronunciation across browsers/OSes, and
+ * browsers with no/poor installed voices at all. It's the same file for
+ * every user, checked in.
  */
 
-// Chrome has a long-standing bug where a SpeechSynthesisUtterance with no
-// other JS reference can be garbage-collected before it finishes speaking,
-// which silently cancels the audio. Keeping one alive here (plus a small
-// queue so overlapping calls don't stomp on each other) works around it.
+const audioManifest = new Set(audioManifestData as string[]);
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-+|-+$)/g, "");
+}
+
+// Only one thing — a live utterance or a pre-recorded clip — should ever be
+// audible at once, and starting a new speak() should always interrupt
+// whatever's still playing from the last one.
 let currentUtterance: SpeechSynthesisUtterance | null = null;
+let currentAudio: HTMLAudioElement | null = null;
+
+function stopCurrentAudio(): void {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.onended = null;
+    currentAudio.onerror = null;
+    currentAudio = null;
+  }
+}
 
 // Deliberately NOT cached across calls: some browsers hand back voice
 // objects whose internal reference can go stale (particularly after tab
@@ -49,8 +75,8 @@ export interface SpeakOptions {
   onEnd?: () => void;
 }
 
-export function speak(text: string, options: SpeakOptions = {}): void {
-  if (!isSpeechSupported() || !text) {
+function speakLive(text: string, options: SpeakOptions): void {
+  if (!isSpeechSupported()) {
     options.onEnd?.();
     return;
   }
@@ -95,9 +121,45 @@ export function speak(text: string, options: SpeakOptions = {}): void {
   }
 }
 
+export function speak(text: string, options: SpeakOptions = {}): void {
+  if (!text) {
+    options.onEnd?.();
+    return;
+  }
+
+  stopCurrentAudio();
+  if (isSpeechSupported()) window.speechSynthesis.cancel();
+
+  const slug = slugify(text);
+  if (!audioManifest.has(slug)) {
+    speakLive(text, options);
+    return;
+  }
+
+  const audio = new Audio(`${import.meta.env.BASE_URL}audio/${slug}.mp3`);
+  audio.playbackRate = options.rate ? options.rate / 0.85 : 1; // pre-rendered at the same 0.85 base rate speakLive uses
+  audio.onended = () => {
+    if (currentAudio === audio) currentAudio = null;
+    options.onEnd?.();
+  };
+  audio.onerror = () => {
+    if (currentAudio === audio) currentAudio = null;
+    // The manifest said this file should exist but it failed to load
+    // (missing from a stale build, network hiccup, etc.) — fall back to
+    // live speech rather than staying silent.
+    speakLive(text, options);
+  };
+
+  currentAudio = audio;
+  audio.play().catch(() => {
+    if (currentAudio === audio) currentAudio = null;
+    speakLive(text, options);
+  });
+}
+
 /** Speaks a sequence of sound parts one after another (e.g. ["s", "n", "ap", "snap"]). */
 export function speakSequence(parts: string[], options: Omit<SpeakOptions, "onEnd"> = {}): void {
-  if (!isSpeechSupported() || parts.length === 0) return;
+  if (parts.length === 0) return;
 
   const speakNext = (queue: string[]) => {
     if (queue.length === 0) return;
@@ -111,6 +173,7 @@ export function speakSequence(parts: string[], options: Omit<SpeakOptions, "onEn
 export function stopSpeech(): void {
   if (isSpeechSupported()) window.speechSynthesis.cancel();
   currentUtterance = null;
+  stopCurrentAudio();
 }
 
 const STRETCHABLE_SOUNDS = new Set(["s", "m", "n", "l", "f", "v", "z", "r"]);
@@ -119,10 +182,8 @@ const STRETCHABLE_SOUNDS = new Set(["s", "m", "n", "l", "f", "v", "z", "r"]);
 // can. Respelling them with a trailing vowel ("puh", "tuh") is a common
 // TTS workaround, but structured-literacy teaching explicitly avoids adding
 // that schwa — "puh-a-tuh" makes blending to "pat" harder, not easier. So
-// these are left as the bare letter: a browser TTS voice may render that
-// closer to the letter's alphabet name than a true clipped stop sound, but
-// that's a lesser problem than teaching the wrong sound outright. Getting
-// this fully right needs real recorded phonics audio, not TTS text.
+// these are left as the bare letter for live TTS. Pre-rendered audio (see
+// above) sidesteps this entirely once a real recording exists for it.
 export function stretchSound(letter: string): string {
   const lower = letter.toLowerCase();
   return STRETCHABLE_SOUNDS.has(lower) ? lower.repeat(4) : lower;
