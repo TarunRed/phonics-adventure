@@ -3,6 +3,7 @@ import type { GameProps } from "../../../types";
 import { shuffle } from "../../../utils/phonicsData";
 import { speak, stretchSound } from "../../../utils/speech";
 import { EmojiTile } from "../../shared/EmojiTile";
+import { AudioButton } from "../../shared/AudioButton";
 import { Button } from "../../shared/Button";
 import styles from "./BlendExplorer.module.css";
 
@@ -68,12 +69,14 @@ export function BlendExplorer({ words, onResult }: GameProps) {
         {stage === "blend" && (
           <div className={styles.row}>
             <span className={[styles.tile, styles.merged].join(" ")}>{target.blend}</span>
+            <AudioButton text={target.blend.toLowerCase()} size="sm" label="Hear the blend" />
           </div>
         )}
         {(stage === "word" || stage === "check") && (
           <div className={styles.row}>
             <span className={[styles.tile, styles.wordTile].join(" ")}>{target.word}</span>
             {!target.nonsense && stage === "word" && <span className={styles.emoji}>{target.emoji}</span>}
+            <AudioButton text={target.word} size="sm" label="Hear the word" />
           </div>
         )}
       </div>

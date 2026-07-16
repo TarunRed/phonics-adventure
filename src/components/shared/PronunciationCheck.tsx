@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSpeechRecognizer } from "../../hooks/useSpeechRecognizer";
 import { speak } from "../../utils/speech";
+import { AudioButton } from "./AudioButton";
 import { Button } from "./Button";
 import styles from "./PronunciationCheck.module.css";
 
@@ -87,7 +88,10 @@ export function PronunciationCheck({ target, instruction, onContinue, continueLa
   return (
     <div className={styles.wrap}>
       <p className={styles.instruction}>{instruction}</p>
-      <p className={styles.targetText}>{target.toLowerCase()}</p>
+      <div className={styles.targetRow}>
+        <p className={styles.targetText}>{target.toLowerCase()}</p>
+        <AudioButton text={target} size="sm" label="Hear it" />
+      </div>
 
       {!gaveUp && state === "idle" && (
         <button type="button" className={styles.micButton} onClick={() => listen(target)} aria-label={`Start recording: say "${target}"`}>
