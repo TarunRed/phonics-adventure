@@ -2,7 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export type RecognizerState = "idle" | "listening" | "checking" | "correct" | "incorrect" | "unsupported" | "error";
 
-const LISTEN_TIMEOUT_MS = 6000;
+/** Max recording length before we auto-stop for them (they can also tap Stop earlier). */
+const LISTEN_TIMEOUT_MS = 10000;
 
 function normalize(text: string): string {
   return text.toLowerCase().replace(/[^a-z]/g, "").trim();
