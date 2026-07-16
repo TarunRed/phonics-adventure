@@ -64,7 +64,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
 
   const startPicking = () => {
     if (!landedWord) return;
-    speak(`Find a word that starts with ${landedWord.blend.toLowerCase()}.`);
+    speak(`Find a word that starts with ${landedWord.blend}.`);
     setStatus("playing");
   };
 
@@ -132,7 +132,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
 
       {status === "verifyBlend" && landedWord && (
         <PronunciationCheck
-          target={landedWord.blend.toLowerCase()}
+          target={landedWord.blend}
           instruction="Say the sound it landed on:"
           continueLabel="Find the picture"
           onContinue={startPicking}
@@ -144,7 +144,7 @@ export function SpinWheel({ words, onResult, hintsEnabled }: GameProps) {
           <div className={styles.challengeHeading}>
             <h3>Find a word that starts with "{landedWord.blend}"</h3>
             <AudioButton
-              text={`${landedWord.blend.toLowerCase()}. Find a word that starts with ${landedWord.blend.toLowerCase()}.`}
+              text={`${landedWord.blend}. Find a word that starts with ${landedWord.blend}.`}
               size="sm"
               label="Hear the challenge again"
             />
