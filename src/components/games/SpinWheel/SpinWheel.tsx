@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { GameProps, PhonicsWord } from "../../../types";
 import { pickRandom, shuffle } from "../../../utils/phonicsData";
-import { speak, speakSequence, stretchSound } from "../../../utils/speech";
+import { speak } from "../../../utils/speech";
 import { useErrorEscalation } from "../../../hooks/useErrorEscalation";
 import { EmojiTile } from "../../shared/EmojiTile";
 import { AudioButton } from "../../shared/AudioButton";
@@ -12,9 +12,13 @@ import styles from "./SpinWheel.module.css";
 
 const SEGMENT_COLOURS = ["#FF9F6B", "#FFC15E", "#8FD6A4", "#7EC8E3", "#9AA9FF", "#C9A0FF"];
 
-/** Speaks each letter of a blend as its stretched phonics sound (e.g. "sn" -> "sss", "n") rather than letter names. */
+/**
+ * Speaks a blend as one continuous, blended sound (e.g. "sl" said the way
+ * it starts "slide") rather than as two separate stretched letter sounds
+ * with a gap between them — that gap is exactly what a blend isn't.
+ */
 function speakBlendSounds(blend: string): void {
-  speakSequence(blend.toLowerCase().split("").map(stretchSound));
+  speak(blend.toLowerCase());
 }
 
 type Status = "idle" | "spinning" | "verifyBlend" | "playing" | "verifyWord" | "done";
