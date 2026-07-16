@@ -113,31 +113,15 @@ export function stopSpeech(): void {
 
 const STRETCHABLE_SOUNDS = new Set(["s", "m", "n", "l", "f", "v", "z", "r"]);
 
-// Stop/plosive consonants can't be held like "sss" can, and a bare single
-// letter gets read as its alphabet NAME by TTS (there's no other way for it
-// to interpret one lone character) — e.g. "p" comes out "pee", not the
-// clipped phonics sound it makes in "spin". Respelling with a trailing "uh"
-// isn't a perfect pure stop sound either, but it's much closer than the
-// letter's name, and is a standard approximation used across phonics apps.
-const STOP_CONSONANT_SOUNDS: Record<string, string> = {
-  b: "buh",
-  c: "kuh",
-  d: "duh",
-  g: "guh",
-  h: "huh",
-  j: "juh",
-  k: "kuh",
-  p: "puh",
-  q: "kwuh",
-  t: "tuh",
-  w: "wuh",
-  x: "ks",
-  y: "yuh",
-};
-
-/** Gives a letter's phonics sound for blending demos, e.g. "s" -> "ssss", "p" -> "puh" (never its alphabet name). */
+// Stop/plosive consonants (p, t, k, b, d, g, ...) can't be held like "sss"
+// can. Respelling them with a trailing vowel ("puh", "tuh") is a common
+// TTS workaround, but structured-literacy teaching explicitly avoids adding
+// that schwa — "puh-a-tuh" makes blending to "pat" harder, not easier. So
+// these are left as the bare letter: a browser TTS voice may render that
+// closer to the letter's alphabet name than a true clipped stop sound, but
+// that's a lesser problem than teaching the wrong sound outright. Getting
+// this fully right needs real recorded phonics audio, not TTS text.
 export function stretchSound(letter: string): string {
   const lower = letter.toLowerCase();
-  if (STRETCHABLE_SOUNDS.has(lower)) return lower.repeat(4);
-  return STOP_CONSONANT_SOUNDS[lower] ?? lower;
+  return STRETCHABLE_SOUNDS.has(lower) ? lower.repeat(4) : lower;
 }
