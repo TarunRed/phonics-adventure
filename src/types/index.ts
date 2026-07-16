@@ -85,3 +85,25 @@ export interface GameProps {
   onResult: (correct: boolean, word: PhonicsWord, tries: number) => void;
   hintsEnabled: boolean;
 }
+
+/** One sound entry in the reference Sounds Guide (e.g. the /ă/ short-a sound). */
+export interface PhonicsSound {
+  id: string;
+  /** Phonemic symbol as shown to the child, e.g. "/ă/". */
+  symbol: string;
+  /** Common spellings for this sound, e.g. ["a"] or ["ai", "ay", "a_e"]. */
+  spellings: string[];
+  /** The reference word this sound is introduced with. */
+  referenceWord: string;
+  /** Five real words to practice this sound. */
+  practiceWords: string[];
+}
+
+export interface PhonicsSoundCategory {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  colour: string;
+  sounds: PhonicsSound[];
+}

@@ -60,6 +60,9 @@ export function Home() {
       </div>
 
       <div className={styles.footerNav}>
+        <Button variant="ghost" size="sm" onClick={() => navigate("/guide")}>
+          📖 Sounds Guide
+        </Button>
         <Button variant="ghost" size="sm" onClick={() => navigate("/teacher")}>
           👩‍🏫 Teacher Mode
         </Button>

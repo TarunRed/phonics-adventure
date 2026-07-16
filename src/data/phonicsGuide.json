@@ -1,0 +1,324 @@
+[
+  {
+    "id": "schwa",
+    "name": "Schwa",
+    "description": "The soft, unstressed \"uh\" sound found in unstressed syllables.",
+    "icon": "🌫️",
+    "colour": "#C9A0FF",
+    "sounds": [
+      {
+        "id": "schwa-e",
+        "symbol": "/ə/",
+        "spellings": ["a", "ai", "e", "o", "ou"],
+        "referenceWord": "what",
+        "practiceWords": ["about", "sofa", "pencil", "lemon", "circus"]
+      }
+    ]
+  },
+  {
+    "id": "short-vowels",
+    "name": "Short Vowels",
+    "description": "The quick, clipped sound each vowel makes in simple words like \"cat\" and \"hot\".",
+    "icon": "🔤",
+    "colour": "#FF9F6B",
+    "sounds": [
+      {
+        "id": "short-a",
+        "symbol": "/ă/",
+        "spellings": ["a"],
+        "referenceWord": "apple",
+        "practiceWords": ["cat", "hat", "map", "bag", "ran"]
+      },
+      {
+        "id": "short-e",
+        "symbol": "/ĕ/",
+        "spellings": ["e", "a"],
+        "referenceWord": "elephant",
+        "practiceWords": ["bed", "red", "hen", "pet", "ten"]
+      },
+      {
+        "id": "short-i",
+        "symbol": "/ĭ/",
+        "spellings": ["i"],
+        "referenceWord": "igloo",
+        "practiceWords": ["pig", "sit", "big", "six", "lip"]
+      },
+      {
+        "id": "short-o",
+        "symbol": "/ŏ/",
+        "spellings": ["o"],
+        "referenceWord": "octopus",
+        "practiceWords": ["hot", "dog", "box", "mop", "top"]
+      },
+      {
+        "id": "short-u",
+        "symbol": "/ŭ/",
+        "spellings": ["u"],
+        "referenceWord": "up",
+        "practiceWords": ["sun", "cup", "bug", "run", "mud"]
+      }
+    ]
+  },
+  {
+    "id": "long-vowels",
+    "name": "Long Vowels",
+    "description": "Vowels that \"say their name\" — the sound stretches out, like in \"cake\" and \"kite\".",
+    "icon": "📏",
+    "colour": "#FFC15E",
+    "sounds": [
+      {
+        "id": "long-a",
+        "symbol": "/ā/",
+        "spellings": ["a_e", "ai", "ay", "ey"],
+        "referenceWord": "cake",
+        "practiceWords": ["cake", "rain", "day", "gate", "play"]
+      },
+      {
+        "id": "long-e",
+        "symbol": "/ē/",
+        "spellings": ["ea", "ee", "e", "e_e", "y"],
+        "referenceWord": "team",
+        "practiceWords": ["bee", "seat", "we", "these", "baby"]
+      },
+      {
+        "id": "long-i",
+        "symbol": "/ī/",
+        "spellings": ["i_e", "ie", "igh", "i", "y", "ye"],
+        "referenceWord": "kite",
+        "practiceWords": ["kite", "pie", "night", "hi", "my"]
+      },
+      {
+        "id": "long-o",
+        "symbol": "/ō/",
+        "spellings": ["o_e", "oa", "o", "ow"],
+        "referenceWord": "rope",
+        "practiceWords": ["rope", "boat", "go", "snow", "nose"]
+      },
+      {
+        "id": "long-oo",
+        "symbol": "/oo/",
+        "spellings": ["u_e", "ue"],
+        "referenceWord": "lute, glue",
+        "practiceWords": ["flute", "blue", "true", "rule", "glue"]
+      },
+      {
+        "id": "long-yoo",
+        "symbol": "/yoo/",
+        "spellings": ["u_e", "ue"],
+        "referenceWord": "use, cue",
+        "practiceWords": ["cute", "cue", "few", "mule", "use"]
+      }
+    ]
+  },
+  {
+    "id": "vowel-r",
+    "name": "Vowel + R",
+    "description": "When a vowel is followed by \"r\", it changes the vowel's sound — like in \"car\" and \"bird\".",
+    "icon": "🌀",
+    "colour": "#7EC8E3",
+    "sounds": [
+      {
+        "id": "air",
+        "symbol": "/air/",
+        "spellings": ["eir", "er", "ere"],
+        "referenceWord": "pair, share",
+        "practiceWords": ["chair", "hair", "bear", "care", "there"]
+      },
+      {
+        "id": "ar",
+        "symbol": "/ar/",
+        "spellings": ["are", "ar"],
+        "referenceWord": "jar",
+        "practiceWords": ["car", "star", "jar", "arm", "park"]
+      },
+      {
+        "id": "ear",
+        "symbol": "/ear/",
+        "spellings": ["ere"],
+        "referenceWord": "hear (eer)",
+        "practiceWords": ["hear", "deer", "here", "ear", "cheer"]
+      },
+      {
+        "id": "er",
+        "symbol": "/er/",
+        "spellings": ["er", "ere", "ir", "or", "ur"],
+        "referenceWord": "herd, bird, turn",
+        "practiceWords": ["her", "bird", "turn", "fern", "girl"]
+      },
+      {
+        "id": "or",
+        "symbol": "/or/",
+        "spellings": ["or"],
+        "referenceWord": "fork",
+        "practiceWords": ["fork", "corn", "for", "born", "storm"]
+      },
+      {
+        "id": "ure",
+        "symbol": "/ure/",
+        "spellings": ["ure"],
+        "referenceWord": "lure (oor)",
+        "practiceWords": ["lure", "cure", "pure", "sure", "tour"]
+      }
+    ]
+  },
+  {
+    "id": "other-vowel-teams",
+    "name": "Other Vowel Teams",
+    "description": "Two letters that team up to make one new vowel sound, like \"oi\" in \"soil\".",
+    "icon": "🎨",
+    "colour": "#8FD6A4",
+    "sounds": [
+      {
+        "id": "aw",
+        "symbol": "/aw/",
+        "spellings": ["al"],
+        "referenceWord": "haul, hawk, ball",
+        "practiceWords": ["ball", "saw", "hawk", "haul", "draw"]
+      },
+      {
+        "id": "short-oo",
+        "symbol": "/oo/",
+        "spellings": ["oo", "ou", "u"],
+        "referenceWord": "book, bush",
+        "practiceWords": ["book", "look", "put", "bush", "cook"]
+      },
+      {
+        "id": "long-oo-team",
+        "symbol": "/oo/",
+        "spellings": ["o", "oo"],
+        "referenceWord": "boot, new",
+        "practiceWords": ["boot", "food", "moon", "spoon", "zoo"]
+      },
+      {
+        "id": "oi",
+        "symbol": "/oi/",
+        "spellings": ["oi", "oy"],
+        "referenceWord": "soil, toy",
+        "practiceWords": ["coin", "boy", "join", "toy", "soil"]
+      },
+      {
+        "id": "ou",
+        "symbol": "/ou/",
+        "spellings": ["ow", "ou"],
+        "referenceWord": "how, out",
+        "practiceWords": ["how", "out", "cow", "house", "down"]
+      }
+    ]
+  },
+  {
+    "id": "consonants",
+    "name": "Consonants",
+    "description": "The building-block sounds of every word that isn't a vowel.",
+    "icon": "🧱",
+    "colour": "#FF9AC1",
+    "sounds": [
+      { "id": "c-b", "symbol": "/b/", "spellings": ["b"], "referenceWord": "bat", "practiceWords": ["bat", "ball", "bug", "cab", "tub"] },
+      { "id": "c-d", "symbol": "/d/", "spellings": ["d"], "referenceWord": "dip", "practiceWords": ["dog", "dip", "mad", "red", "bed"] },
+      { "id": "c-f", "symbol": "/f/", "spellings": ["f", "ff"], "referenceWord": "fun", "practiceWords": ["fun", "fish", "off", "cuff", "leaf"] },
+      { "id": "c-g", "symbol": "/g/", "spellings": ["g"], "referenceWord": "get", "practiceWords": ["get", "go", "bag", "dog", "gum"] },
+      { "id": "c-h", "symbol": "/h/", "spellings": ["h", "wh"], "referenceWord": "hat", "practiceWords": ["hat", "hop", "who", "hen", "hit"] },
+      { "id": "c-j", "symbol": "/j/", "spellings": ["j"], "referenceWord": "jog", "practiceWords": ["jog", "jam", "jet", "jump", "jar"] },
+      { "id": "c-k", "symbol": "/k/", "spellings": ["k"], "referenceWord": "kit", "practiceWords": ["kit", "kid", "sky", "kite", "milk"] },
+      { "id": "c-l", "symbol": "/l/", "spellings": ["l", "ll"], "referenceWord": "lip", "practiceWords": ["lip", "log", "ball", "hill", "leg"] },
+      { "id": "c-m", "symbol": "/m/", "spellings": ["m"], "referenceWord": "mug", "practiceWords": ["mug", "man", "mom", "ham", "map"] },
+      { "id": "c-n", "symbol": "/n/", "spellings": ["n"], "referenceWord": "nap", "practiceWords": ["nap", "net", "sun", "fun", "ten"] },
+      { "id": "c-p", "symbol": "/p/", "spellings": ["p"], "referenceWord": "pick", "practiceWords": ["pick", "pig", "cup", "top", "pat"] },
+      { "id": "c-r", "symbol": "/r/", "spellings": ["r"], "referenceWord": "rid", "practiceWords": ["rid", "run", "rat", "car", "red"] },
+      { "id": "c-s", "symbol": "/s/", "spellings": ["s", "ss"], "referenceWord": "sit, mess", "practiceWords": ["sit", "sun", "mess", "kiss", "bus"] },
+      { "id": "c-s-z", "symbol": "/z/", "spellings": ["s"], "referenceWord": "his", "practiceWords": ["his", "is", "has", "ears", "dogs"] },
+      { "id": "c-t", "symbol": "/t/", "spellings": ["t"], "referenceWord": "tuck", "practiceWords": ["tuck", "top", "cat", "sit", "ten"] },
+      { "id": "c-v", "symbol": "/v/", "spellings": ["v"], "referenceWord": "van", "practiceWords": ["van", "vet", "vine", "love", "cave"] },
+      { "id": "c-w", "symbol": "/w/", "spellings": ["w"], "referenceWord": "will", "practiceWords": ["will", "wet", "win", "wag", "wig"] },
+      { "id": "c-x", "symbol": "/ks/", "spellings": ["x", "cks"], "referenceWord": "mix, rocks", "practiceWords": ["mix", "fox", "box", "socks", "rocks"] },
+      { "id": "c-y", "symbol": "/y/", "spellings": ["y"], "referenceWord": "yes", "practiceWords": ["yes", "yard", "yell", "yak", "yum"] },
+      { "id": "c-z", "symbol": "/z/", "spellings": ["z", "zz"], "referenceWord": "zip, buzz", "practiceWords": ["zip", "zoo", "buzz", "jazz", "zap"] }
+    ]
+  },
+  {
+    "id": "soft-consonants",
+    "name": "Soft Consonants",
+    "description": "C and G can sound soft (like S and J) when followed by e, i, or y.",
+    "icon": "🪶",
+    "colour": "#C9A0FF",
+    "sounds": [
+      {
+        "id": "soft-c",
+        "symbol": "/s/",
+        "spellings": ["ce", "ci", "cy"],
+        "referenceWord": "cent, circus, cycle",
+        "practiceWords": ["cent", "city", "cycle", "fence", "mice"]
+      },
+      {
+        "id": "soft-g",
+        "symbol": "/j/",
+        "spellings": ["ge", "gi", "gy"],
+        "referenceWord": "gem, giant, gym",
+        "practiceWords": ["gem", "giant", "gym", "cage", "page"]
+      }
+    ]
+  },
+  {
+    "id": "silent-consonants",
+    "name": "Silent Consonants",
+    "description": "One letter stays quiet so its partner can be heard, like the silent K in \"knife\".",
+    "icon": "🤫",
+    "colour": "#7EC8E3",
+    "sounds": [
+      {
+        "id": "silent-gn",
+        "symbol": "/n/",
+        "spellings": ["gn"],
+        "referenceWord": "gnome",
+        "practiceWords": ["gnome", "gnat", "gnaw", "gnarl", "gnu"]
+      },
+      {
+        "id": "silent-kn",
+        "symbol": "/n/",
+        "spellings": ["kn"],
+        "referenceWord": "knife",
+        "practiceWords": ["knife", "knee", "know", "knot", "knock"]
+      },
+      {
+        "id": "silent-wr",
+        "symbol": "/r/",
+        "spellings": ["wr"],
+        "referenceWord": "wrist",
+        "practiceWords": ["wrist", "write", "wrap", "wrong", "wreck"]
+      }
+    ]
+  },
+  {
+    "id": "digraphs",
+    "name": "Digraphs",
+    "description": "Two letters that team up to make one brand-new sound, like \"sh\" in \"ship\".",
+    "icon": "🔗",
+    "colour": "#FFC15E",
+    "sounds": [
+      { "id": "d-ch", "symbol": "/ch/", "spellings": ["ch", "tch"], "referenceWord": "chick", "practiceWords": ["chick", "chip", "catch", "watch", "chin"] },
+      { "id": "d-ng", "symbol": "/ŋ/", "spellings": ["ng"], "referenceWord": "ring", "practiceWords": ["ring", "king", "song", "sing", "long"] },
+      { "id": "d-sh", "symbol": "/sh/", "spellings": ["sh"], "referenceWord": "ship", "practiceWords": ["ship", "shop", "fish", "shell", "wish"] },
+      { "id": "d-th-unvoiced", "symbol": "/th/", "spellings": ["th"], "referenceWord": "thin", "practiceWords": ["thin", "think", "bath", "moth", "math"] },
+      { "id": "d-th-voiced", "symbol": "/th/", "spellings": ["th"], "referenceWord": "the", "practiceWords": ["the", "this", "that", "then", "mother"] },
+      { "id": "d-wh", "symbol": "/hw/", "spellings": ["wh"], "referenceWord": "whip", "practiceWords": ["whip", "whistle", "wheel", "white", "why"] },
+      { "id": "d-ck", "symbol": "/k/", "spellings": ["c", "ck"], "referenceWord": "cut", "practiceWords": ["cut", "cat", "duck", "back", "pick"] },
+      { "id": "d-qu", "symbol": "/qu/", "spellings": ["qu"], "referenceWord": "quest", "practiceWords": ["quest", "quiz", "queen", "quick", "quilt"] }
+    ]
+  },
+  {
+    "id": "s-blends",
+    "name": "S Blends",
+    "description": "This app's own focus: S teams up with another consonant, both sounds blending together with no gap — the same blends practised in every game here.",
+    "icon": "🌟",
+    "colour": "#FF9F6B",
+    "sounds": [
+      { "id": "b-sc", "symbol": "/sk/", "spellings": ["sc"], "referenceWord": "scan", "practiceWords": ["scan", "scab", "scale", "scoop", "scarf"] },
+      { "id": "b-sk", "symbol": "/sk/", "spellings": ["sk"], "referenceWord": "skip", "practiceWords": ["skip", "skin", "skate", "sky", "skunk"] },
+      { "id": "b-sl", "symbol": "/sl/", "spellings": ["sl"], "referenceWord": "slide", "practiceWords": ["slide", "sleep", "slip", "slow", "sled"] },
+      { "id": "b-sm", "symbol": "/sm/", "spellings": ["sm"], "referenceWord": "smile", "practiceWords": ["smile", "small", "smell", "smoke", "smash"] },
+      { "id": "b-sn", "symbol": "/sn/", "spellings": ["sn"], "referenceWord": "snap", "practiceWords": ["snake", "snap", "snow", "sniff", "snail"] },
+      { "id": "b-sp", "symbol": "/sp/", "spellings": ["sp"], "referenceWord": "spin", "practiceWords": ["spin", "spot", "spoon", "spider", "space"] },
+      { "id": "b-st", "symbol": "/st/", "spellings": ["st"], "referenceWord": "stop", "practiceWords": ["stop", "star", "stem", "story", "stair"] },
+      { "id": "b-sw", "symbol": "/sw/", "spellings": ["sw"], "referenceWord": "swim", "practiceWords": ["swim", "swing", "sweet", "swan", "switch"] }
+    ]
+  }
+]

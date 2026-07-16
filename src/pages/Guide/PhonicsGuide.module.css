@@ -1,0 +1,207 @@
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px;
+}
+
+.intro {
+  max-width: 560px;
+  margin: 0 auto 20px;
+  padding: 0 20px;
+  text-align: center;
+  color: var(--color-ink-soft);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  background: var(--color-surface);
+  border: none;
+  border-left: 6px solid;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+  touch-action: manipulation;
+}
+
+.categoryHeader:active {
+  transform: scale(0.99);
+}
+
+.categoryIcon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.categoryTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.categoryName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-ink);
+}
+
+.categoryDesc {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  line-height: 1.3;
+}
+
+.categoryMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.categoryCount {
+  background: var(--color-bg-alt);
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+}
+
+.chevron {
+  color: var(--color-ink-soft);
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+  animation: rise 0.25s ease;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-surface);
+  border: 2px solid;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow: var(--shadow-soft);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.symbolButton {
+  flex-shrink: 0;
+  min-width: 64px;
+  height: 48px;
+  padding: 0 12px;
+  border: none;
+  border-radius: var(--radius-md);
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-soft);
+  touch-action: manipulation;
+}
+
+.symbolButton:active {
+  transform: scale(0.94);
+}
+
+.spellings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.spellingChip {
+  background: var(--color-bg-alt);
+  color: var(--color-ink-soft);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.practiceWords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.wordChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: var(--color-bg-alt);
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  touch-action: manipulation;
+}
+
+.wordChip:active {
+  transform: scale(0.95);
+}
+
+.wordSpeaker {
+  font-size: 0.75rem;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}

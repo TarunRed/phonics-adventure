@@ -1,7 +1,8 @@
 import wordsData from "../data/words.json";
 import blendsData from "../data/blends.json";
 import levelsData from "../data/levels.json";
-import type { Blend, GameId, PhonicsLevel, PhonicsWord } from "../types";
+import phonicsGuideData from "../data/phonicsGuide.json";
+import type { Blend, GameId, PhonicsLevel, PhonicsSoundCategory, PhonicsWord } from "../types";
 
 /**
  * All phonics content access goes through this module. If the JSON files
@@ -11,6 +12,7 @@ import type { Blend, GameId, PhonicsLevel, PhonicsWord } from "../types";
 export const allWords = wordsData as PhonicsWord[];
 export const allBlends = blendsData as Blend[];
 export const allLevels = levelsData as PhonicsLevel[];
+export const phonicsGuide = phonicsGuideData as PhonicsSoundCategory[];
 
 export function getBlend(blendId: string): Blend {
   const blend = allBlends.find((b) => b.id === blendId);

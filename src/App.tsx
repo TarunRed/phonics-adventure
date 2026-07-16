@@ -7,6 +7,7 @@ import { Play } from "./pages/Play/Play";
 import { Teacher } from "./pages/Teacher/Teacher";
 import { Parent } from "./pages/Parent/Parent";
 import { SessionSummary } from "./pages/Progress/SessionSummary";
+import { PhonicsGuide } from "./pages/Guide/PhonicsGuide";
 
 /**
  * HashRouter is used instead of BrowserRouter so the built app can be
@@ -27,6 +28,7 @@ function App() {
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/parent" element={<Parent />} />
           <Route path="/summary" element={<SessionSummary />} />
+          <Route path="/guide" element={<PhonicsGuide />} />
         </Routes>
       </HashRouter>
     </ProgressProvider>
