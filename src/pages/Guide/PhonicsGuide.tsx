@@ -1,4 +1,5 @@
 import { useState } from "react";
+import posthog from "posthog-js";
 import { phonicsGuide } from "../../utils/phonicsData";
 import { speak, stretchSound } from "../../utils/speech";
 import type { PhonicsSound, PhonicsSoundCategory } from "../../types";
@@ -117,6 +118,18 @@ function CategorySection({ category, expanded, onToggle }: { category: PhonicsSo
 export function PhonicsGuide() {
   const [expandedId, setExpandedId] = useState<string | null>(phonicsGuide[0]?.id ?? null);
 
+  const handleToggle = (category: PhonicsSoundCategory) => {
+    const isExpanding = expandedId !== category.id;
+    setExpandedId((prev) => (prev === category.id ? null : category.id));
+    if (isExpanding) {
+      posthog.capture("guide_category_expanded", {
+        category_id: category.id,
+        category_name: category.name,
+        sound_count: category.sounds.length,
+      });
+    }
+  };
+
   return (
     <div className={styles.page}>
       <Header title="📖 Sounds Guide" showStars={false} />
@@ -132,7 +145,7 @@ export function PhonicsGuide() {
             key={category.id}
             category={category}
             expanded={expandedId === category.id}
-            onToggle={() => setExpandedId((prev) => (prev === category.id ? null : category.id))}
+            onToggle={() => handleToggle(category)}
           />
         ))}
       </div>

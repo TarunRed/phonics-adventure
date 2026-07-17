@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import posthog from "posthog-js";
 import { useProgress } from "../../context/ProgressContext";
 import { allBlends, allLevels, getWordsByBlend } from "../../utils/phonicsData";
 import { Header } from "../../components/shared/Header";
@@ -27,12 +28,21 @@ export function Teacher() {
       hintsEnabled: teacherSettings.enableHints,
       hideTimer: teacherSettings.hideTimer,
     };
+    posthog.capture("teacher_session_started", {
+      blend: teacherSettings.blend ?? "all",
+      family: teacherSettings.family ?? "all",
+      level: teacherSettings.level,
+      guided_mode: teacherSettings.guidedMode,
+      hints_enabled: teacherSettings.enableHints,
+      hide_timer: teacherSettings.hideTimer,
+    });
     navigate("/play", { state: config });
   };
 
   const assignHomework = (blendId: string) => {
     updateTeacherSettings({ homeworkBlend: blendId });
     setHomeworkAssigned(blendId);
+    posthog.capture("homework_assigned", { blend: blendId });
   };
 
   return (

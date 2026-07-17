@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import posthog from "posthog-js";
 import { allLevels } from "../../utils/phonicsData";
 import { Button } from "../../components/shared/Button";
 import type { PlayConfig } from "../Play/Play";
@@ -16,6 +17,7 @@ export function Home() {
       hintsEnabled: true,
       hideTimer: false,
     };
+    posthog.capture("independent_play_started", { round_count: 10 });
     navigate("/play", { state: config });
   };
 
@@ -28,6 +30,7 @@ export function Home() {
       hintsEnabled: true,
       hideTimer: false,
     };
+    posthog.capture("game_selected", { game, round_count: 10 });
     navigate("/play", { state: config });
   };
 

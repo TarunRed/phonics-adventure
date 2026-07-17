@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import posthog from "posthog-js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
 import { buildSession, type Round } from "../../utils/sessionBuilder";
@@ -70,6 +71,14 @@ export function Play() {
   useEffect(() => {
     resetSession();
     startedAt.current = Date.now();
+    posthog.capture("game_started", {
+      game: config.onlyGame ?? "mixed",
+      blend: config.blend ?? "all",
+      family: config.family ?? "all",
+      round_count: config.roundCount,
+      hints_enabled: config.hintsEnabled,
+      hide_timer: config.hideTimer,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -95,12 +104,29 @@ export function Play() {
   const handleResult = (correct: boolean, word: (typeof round.words)[number], tries: number) => {
     recordAttempt(word, round.game, correct, tries);
 
+    posthog.capture("word_answered", {
+      game: round.game,
+      blend: word.blend,
+      word_family: word.family,
+      correct,
+      tries,
+      round_index: roundIndex,
+      difficulty: word.difficulty,
+    });
+
     const newStars = stars + (correct ? 1 : 0);
     const crossedMilestone = correct && newStars > 0 && newStars % 5 === 0 && newStars !== prevStars.current;
     prevStars.current = newStars;
 
     const goNext = () => {
       if (roundIndex + 1 >= rounds.length) {
+        posthog.capture("session_completed", {
+          game: config.onlyGame ?? "mixed",
+          blend: config.blend ?? "all",
+          total_rounds: rounds.length,
+          stars: newStars,
+          duration_ms: Date.now() - startedAt.current,
+        });
         navigate("/summary");
       } else {
         setRoundIndex((i) => i + 1);
@@ -108,6 +134,11 @@ export function Play() {
     };
 
     if (crossedMilestone) {
+      posthog.capture("milestone_reached", {
+        stars: newStars,
+        game: round.game,
+        blend: word.blend,
+      });
       setCelebrating(true);
     } else {
       goNext();
@@ -117,6 +148,13 @@ export function Play() {
   const handleCelebrationDone = () => {
     setCelebrating(false);
     if (roundIndex + 1 >= rounds.length) {
+      posthog.capture("session_completed", {
+        game: config.onlyGame ?? "mixed",
+        blend: config.blend ?? "all",
+        total_rounds: rounds.length,
+        stars: prevStars.current,
+        duration_ms: Date.now() - startedAt.current,
+      });
       navigate("/summary");
     } else {
       setRoundIndex((i) => i + 1);
