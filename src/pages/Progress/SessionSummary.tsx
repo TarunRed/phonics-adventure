@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import posthog from "posthog-js";
 import { useProgress } from "../../context/ProgressContext";
 import { Button } from "../../components/shared/Button";
 import { StarBadge } from "../../components/shared/StarBadge";
@@ -13,7 +15,19 @@ export function SessionSummary() {
 
   const succeeded = accuracy >= SUCCESS_ACCURACY || wordsMastered.length >= SUCCESS_WORDS;
 
+  useEffect(() => {
+    posthog.capture("session_summary_viewed", {
+      stars,
+      accuracy,
+      words_mastered: wordsMastered.length,
+      words_attempted: wordsAttempted,
+      succeeded,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const playAgain = () => {
+    posthog.capture("play_again_clicked", { stars, accuracy, words_mastered: wordsMastered.length });
     resetSession();
     navigate("/");
   };
